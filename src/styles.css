@@ -1,0 +1,28 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid red;
+    height: 15vh;
+}
+
+.links {
+    width: 40vw;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sidebar {
+    width: 25vw;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    border: 1px solid blue;
+}
