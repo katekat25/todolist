@@ -1,14 +1,21 @@
+/*sidebar needs to stick to side of page, change display and remove the"body height 100vh" thing
+because it's messing up card sizing*/
+
 body {
     margin: 0;
     padding: 0;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+    grid-template-columns: 1fr 4fr;
 }
 
 .header {
+    grid-column: 1 / 3;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border: 1px solid red;
-    height: 15vh;
 }
 
 .links {
@@ -18,11 +25,22 @@ body {
 }
 
 .sidebar {
-    width: 25vw;
-    height: 85vh;
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     flex-grow: 1;
     border: 1px solid blue;
+}
+
+.content {
+    display: grid;
+    grid-template: 1fr 1fr / 1fr 1fr 1fr;
+    gap: 50px;
+    padding: 50px;
+}
+
+.card {
+    border: 1px solid green;
 }
