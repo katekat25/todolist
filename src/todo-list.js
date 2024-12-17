@@ -10,10 +10,17 @@ class TodoList {
     removeItemFromList (item) {
         let oldIndex = item.listIndex;
         // Shifts the index number of each following item
-        list.splice(oldIndex, 1);
-        for (let i = oldIndex; i < list.length; i++) {
-            list[i].listIndex = i;
+        this.list.splice(oldIndex, 1);
+        for (let i = oldIndex; i < this.list.length; i++) {
+            this.list[i].listIndex = i;
         };
+    }
+    getList () {
+        return this.list;
+    }
+
+    getListLength () {
+        return this.list.length;
     }
 }
 
