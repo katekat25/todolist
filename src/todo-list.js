@@ -2,10 +2,10 @@
 
 class TodoList {
     constructor () {
-        let list = [];
+        this.list = [];
     }
     addItemToList (item) {
-        list.push(item);
+        this.list.push(item);
     }
     removeItemFromList (item) {
         let oldIndex = item.listIndex;
@@ -16,3 +16,5 @@ class TodoList {
         };
     }
 }
+
+export { TodoList }
