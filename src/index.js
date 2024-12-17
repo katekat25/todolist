@@ -1,9 +1,9 @@
 import "./styles.css";
 import { TodoList } from "./todo-list";
 import { TodoItem, todoItemController } from "./todo-item";
-// import { drawModal } from "./newItemPage";
+import { drawModal } from "./newItemPage";
 
-// drawModal();
+drawModal();
 
 // STEPS:
 // 1.)Write the logic that stores 
