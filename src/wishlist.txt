@@ -1,0 +1,2 @@
+Nice things to add:
+-A custom dropdown menu for selecting priority with different colored text

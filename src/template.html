@@ -37,7 +37,7 @@
     <div class="dynamic"></div>
     <!-- Begin dynamic elements -->
 
-    <!-- <div class="content">
+    <div class="content">
         <div class="card">Test card</div>
         <div class="card">Test card</div>
         <div class="card">Test card</div>
@@ -48,11 +48,30 @@
         <div class="card">Test card</div>
         <div class="card">Test card</div>
     </div>
-    <div class="popup-background">
-        <div class="popup">
-            Testing!
+    <div class="modal-background">
+        <div class="modal-content">
+            <form action="./formProcessing.js" method="post">
+                <h1>Add a task</h1>
+                <!-- Task name -->
+                <label for="title">Title:</label>
+                <input type="text" id="title">
+                <!-- Description -->
+                <label for="description">Description:</label>
+                <input type="text" id="description">
+                <!-- Due date dropdown -->
+                <label for="dueDate">Due:</label>
+                <input type="datetime-local" id="dueDate">
+                <!-- Priority setter -->
+                <select name="Priority">
+                    <option value="1">High</option>
+                    <option value="2">Medium</option>
+                    <option value="3">Low</option>
+                </select>
+                <!-- Submit button -->
+                <button type="submit">Submit</button>
+            </form>
         </div>
-    </div> -->
+    </div>
 </body>
 
 </html>
