@@ -1,6 +1,7 @@
 // Helper function to create an element, set attributes, and append to a parent
 
-import { createDOMElement } from "./index";
+import { createDOMElement, testList } from "./index";
+import { todoItemController } from "./todo-item";
 
 function drawModal() {
     const container = document.querySelector(".modal");
@@ -22,15 +23,15 @@ function drawModal() {
 
     // Title Input
     createDOMElement("label", { for: "title" }, "Title:", inputs);
-    createDOMElement("input", { type: "text", id: "title" }, "", inputs);
+    const title = createDOMElement("input", { type: "text", id: "title" }, "", inputs);
 
     // Description Input
     createDOMElement("label", { for: "description" }, "Description:", inputs);
-    createDOMElement("input", { type: "text", id: "description" }, "", inputs);
+    const description = createDOMElement("input", { type: "text", id: "description" }, "", inputs);
 
     // Due Date Input
     createDOMElement("label", { for: "dueDate" }, "Due date:", inputs);
-    createDOMElement("input", { type: "datetime-local", id: "dueDate" }, "", inputs);
+    const dueDate = createDOMElement("input", { type: "datetime-local", id: "dueDate" }, "", inputs);
 
     // Priority Select
     createDOMElement("label", { for: "priority" }, "Priority:", inputs);
@@ -41,7 +42,13 @@ function drawModal() {
     createDOMElement("option", { value: "3" }, "Low", prioritySelect);
 
     // Submit Button
-    createDOMElement("button", { type: "submit" }, "Submit", form);
+    const submitButton = createDOMElement("button", { type: "submit" }, "Submit", form);
+    submitButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        let newItem = todoItemController.generateTodoItem(title.value, description.value, dueDate.value, prioritySelect.value, testList.getListLength());
+        testList.addItemToList(newItem);
+        console.log(testList);
+    });
 }
 
 export { drawModal };

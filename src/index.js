@@ -4,26 +4,23 @@ import { TodoItem, todoItemController } from "./todo-item";
 import { drawModal } from "./newItemPage";
 
 drawModal();
-
+let testList = new TodoList;
 
 function createDOMElement(type, attributes = {}, textContent = "", parent = null) {
     const element = document.createElement(type);
-
     // Set attributes
     for (const [key, value] of Object.entries(attributes)) {
         element.setAttribute(key, value);
     }
-
     // Set text content
     if (textContent) element.textContent = textContent;
-
     // Append to parent
     if (parent) parent.appendChild(element);
 
     return element;
 }
 
-export { createDOMElement };
+export { createDOMElement, testList };
 
 // STEPS:
 // 1.)Write the logic that stores 
