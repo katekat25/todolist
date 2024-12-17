@@ -1,87 +1,47 @@
-function drawModal () {
+// Helper function to create an element, set attributes, and append to a parent
+
+import { createDOMElement } from "./index";
+
+function drawModal() {
     const container = document.querySelector(".modal");
 
-    const modalBackground = document.createElement("div");
-    modalBackground.classList.add("modal-background");
-    container.appendChild(modalBackground);
+    // Modal background
+    const modalBackground = createDOMElement("div", { class: "modal-background" }, "", container);
 
-    const modalContent = document.createElement("div");
-    modalContent.textContent = "Testing!";
-    modalContent.classList.add("modal-content");
-    modalBackground.appendChild(modalContent);
+    // Modal content
+    const modalContent = createDOMElement("div", { class: "modal-content" }, "Testing!", modalBackground);
 
-    const form = document.createElement("form");
-    // method post? action?
-    modalContent.appendChild(form);
+    // Form
+    const form = createDOMElement("form", {}, "", modalContent);
 
-    const h1 = document.createElement("h1");
-    h1.textContent = "New task";
-    form.appendChild(h1);
+    // Title
+    createDOMElement("h1", {}, "New task", form);
 
-    const inputs = document.createElement("div");
-    inputs.classList.add("inputs");
-    form.appendChild(inputs);
+    // Inputs container
+    const inputs = createDOMElement("div", { class: "inputs" }, "", form);
 
-    const titleLabel = document.createElement("label");
-    titleLabel.setAttribute("for", "title");
-    titleLabel.textContent = "Title:";
-    inputs.appendChild(titleLabel);
+    // Title Input
+    createDOMElement("label", { for: "title" }, "Title:", inputs);
+    createDOMElement("input", { type: "text", id: "title" }, "", inputs);
 
-    const titleInput = document.createElement("input");
-    titleInput.setAttribute("type", "text");
-    titleInput.id = "title";
-    inputs.appendChild(titleInput);
+    // Description Input
+    createDOMElement("label", { for: "description" }, "Description:", inputs);
+    createDOMElement("input", { type: "text", id: "description" }, "", inputs);
 
-    const descriptionLabel = document.createElement("label");
-    descriptionLabel.setAttribute("for", "description");
-    descriptionLabel.textContent = "Description:";
-    inputs.appendChild(descriptionLabel);
+    // Due Date Input
+    createDOMElement("label", { for: "dueDate" }, "Due date:", inputs);
+    createDOMElement("input", { type: "datetime-local", id: "dueDate" }, "", inputs);
 
-    const descriptionInput = document.createElement("input");
-    descriptionInput.setAttribute("type", "text");
-    descriptionInput.id = "description";
-    inputs.appendChild(descriptionInput);
+    // Priority Select
+    createDOMElement("label", { for: "priority" }, "Priority:", inputs);
+    const prioritySelect = createDOMElement("select", { name: "Priority" }, "", inputs);
 
-    const dueDateLabel = document.createElement("label");
-    dueDateLabel.setAttribute("for", "dueDate");
-    dueDateLabel.textContent = "Due date:";
-    inputs.appendChild(dueDateLabel);
+    createDOMElement("option", { value: "1" }, "High", prioritySelect);
+    createDOMElement("option", { value: "2" }, "Medium", prioritySelect);
+    createDOMElement("option", { value: "3" }, "Low", prioritySelect);
 
-    const dueDateInput = document.createElement("input");
-    dueDateInput.setAttribute("type", "datetime-local");
-    dueDateInput.id = "dueDate";
-    inputs.appendChild(dueDateInput);
-
-    const priorityLabel = document.createElement("label");
-    priorityLabel.setAttribute("for", "priority");
-    priorityLabel.textContent = "Priority:";
-    inputs.appendChild(priorityLabel);
-
-    const prioritySelect = document.createElement("select");
-    prioritySelect.setAttribute("name", "Priority");
-    inputs.appendChild(prioritySelect);
-
-    const option1 = document.createElement("option");
-    option1.setAttribute("value", 1);
-    option1.textContent = "High";
-    prioritySelect.appendChild(option1);
-
-    
-    const option2 = document.createElement("option");
-    option2.setAttribute("value", 2);
-    option2.textContent = "Medium";
-    prioritySelect.appendChild(option2);
-
-
-    const option3 = document.createElement("option");
-    option3.setAttribute("value", 3);
-    option3.textContent = "Low";
-    prioritySelect.appendChild(option3);
-
-    const submitButton = document.createElement("button");
-    submitButton.setAttribute("type", "submit");
-    submitButton.textContent = "Submit";
-    form.appendChild(submitButton);
+    // Submit Button
+    createDOMElement("button", { type: "submit" }, "Submit", form);
 }
 
-export{ drawModal };
+export { drawModal };
