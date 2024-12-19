@@ -1,5 +1,3 @@
-// Helper function to create an element, set attributes, and append to a parent
-
 import { createDOMElement, testList } from "./index";
 import { todoItemController } from "./todo-item";
 
@@ -10,7 +8,10 @@ function drawModal() {
     const modalBackground = createDOMElement("div", { class: "modal-background" }, "", container);
 
     // Modal content
-    const modalContent = createDOMElement("div", { class: "modal-content" }, "Testing!", modalBackground);
+    const modalContent = createDOMElement("div", { class: "modal-content" }, "", modalBackground);
+
+    // Close button
+    const closeButton = createDOMElement("Button", { class: "close-button"}, "X", modalContent);
 
     // Form
     const form = createDOMElement("form", {}, "", modalContent);
@@ -48,7 +49,13 @@ function drawModal() {
         let newItem = todoItemController.generateTodoItem(title.value, description.value, dueDate.value, prioritySelect.value, testList.getListLength());
         testList.addItemToList(newItem);
         console.log(testList);
+        container.innerHTML = "";
     });
+
+    closeButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        container.innerHTML = "";
+    } )
 }
 
 export { drawModal };

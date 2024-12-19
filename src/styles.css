@@ -38,14 +38,19 @@ body {
     border: 1px solid blue;
 }
 
+
 .content {
+    padding: 50px;
+}
+/* Toggle card view? */
+/* .content {
     grid-row: 2 / 3;
     grid-column: 2 / 3;
     display: grid;
     grid-template: 1fr 1fr / 1fr 1fr 1fr;
     gap: 50px;
     padding: 50px;
-}
+} */
 
 .card {
     border: 1px solid green;
