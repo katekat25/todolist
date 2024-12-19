@@ -1,8 +1,9 @@
 import { createDOMElement, testList } from "./index";
 
 function drawTodoListDisplay() {
+    const pageContainer = document.querySelector(".content");
+    
     const drawTodoItem = (item) => {
-        const pageContainer = document.querySelector(".content");
 
         //Container div for todo items
         const todoContainer = createDOMElement("div", { class: "todo-item" }, "", pageContainer);
@@ -25,7 +26,13 @@ function drawTodoListDisplay() {
         //Priority (may edit this out later and change title color instead)
         createDOMElement("div", { class: "todo-priority"}, "Priority: HIGH AF!!", todoDetails);
     }
-    return { drawTodoItem };
+
+    const drawTodoList = (list) => {
+        for (let i = 0; i < list.length; i++) {
+            drawTodoItem(list[i]);
+        }
+    }
+    return { drawTodoItem, drawTodoList };
 };
 
 export { drawTodoListDisplay };

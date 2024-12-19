@@ -7,8 +7,6 @@ import { drawTodoListDisplay } from "./todoListPage";
 drawModal();
 let testList = new TodoList;
 drawTodoListDisplay();
-drawTodoListDisplay();
-drawTodoListDisplay();
 
 function createDOMElement(type, attributes = {}, textContent = "", parent = null) {
     const element = document.createElement(type);

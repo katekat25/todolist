@@ -1,5 +1,6 @@
 import { createDOMElement, testList } from "./index";
 import { todoItemController } from "./todo-item";
+import { drawTodoListDisplay } from "./todoListPage";
 
 function drawModal() {
     const container = document.querySelector(".modal");
@@ -48,6 +49,7 @@ function drawModal() {
         event.preventDefault();
         let newItem = todoItemController.generateTodoItem(title.value, description.value, dueDate.value, prioritySelect.value, testList.getListLength());
         testList.addItemToList(newItem);
+        
         console.log(testList);
         container.innerHTML = "";
     });
