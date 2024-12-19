@@ -2,9 +2,13 @@ import "./styles.css";
 import { TodoList } from "./todo-list";
 import { TodoItem, todoItemController } from "./todo-item";
 import { drawModal } from "./newItemPage";
+import { drawTodoListDisplay } from "./todoListPage";
 
 drawModal();
 let testList = new TodoList;
+drawTodoListDisplay();
+drawTodoListDisplay();
+drawTodoListDisplay();
 
 function createDOMElement(type, attributes = {}, textContent = "", parent = null) {
     const element = document.createElement(type);
