@@ -1,9 +1,12 @@
-import { createDOMElement, testList } from "./index";
+import { createDOMElement } from "./index";
+import { TodoList } from "./todo-list";
 
-function drawTodoListDisplay() {
+function listDisplayController() {
     const pageContainer = document.querySelector(".content");
     
     const drawTodoItem = (item) => {
+
+        // console.log("Drawing an item");
 
         //Container div for todo items
         const todoContainer = createDOMElement("div", { class: "todo-item" }, "", pageContainer);
@@ -27,12 +30,16 @@ function drawTodoListDisplay() {
         createDOMElement("div", { class: "todo-priority"}, "Priority: HIGH AF!!", todoDetails);
     }
 
-    const drawTodoList = (list) => {
-        for (let i = 0; i < list.length; i++) {
+    function drawTodoList(list) {
+        // console.log("In drawTodoList");
+        // console.log(list);
+        // console.log(typeof(list));
+        // console.log("list.length is " + list.getListLength());
+        for (let i = 0; i < list.getListLength(); i++) {
             drawTodoItem(list[i]);
         }
     }
     return { drawTodoItem, drawTodoList };
 };
 
-export { drawTodoListDisplay };
+export { listDisplayController };
