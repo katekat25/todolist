@@ -2,7 +2,7 @@ import { createDOMElement, testList, todoListController } from "./index";
 import { todoItemController } from "./todo-item";
 import { drawTodoListDisplay } from "./todoListPage";
 
-function drawPopup(popupType) {
+function drawPopup(popupType, itemToEdit = null) {
     const container = document.querySelector(".modal");
 
     // Modal background
@@ -12,7 +12,7 @@ function drawPopup(popupType) {
     const modalContent = createDOMElement("div", { class: "modal-content" }, "", modalBackground);
 
     // Close button
-    const closeButton = createDOMElement("Button", { class: "close-button"}, "X", modalContent);
+    const closeButton = createDOMElement("Button", { class: "close-button" }, "X", modalContent);
 
     // Form
     const form = createDOMElement("form", {}, "", modalContent);
@@ -46,19 +46,29 @@ function drawPopup(popupType) {
     // Submit Button
     const submitButton = createDOMElement("button", { type: "submit" }, "Submit", form);
     submitButton.addEventListener("click", (event) => {
+        console.log("popup type is " + popupType);
         event.preventDefault();
-        let newItem = todoItemController.generateTodoItem(title.value, description.value, dueDate.value, prioritySelect.value, testList.getListLength());
-        // console.log(newItem.isComplete);
-        testList.addItemToList(newItem);
+        if (popupType === "add") {
+            console.log("adding task");
+            let newItem = todoItemController.generateTodoItem(title.value, description.value, dueDate.value, prioritySelect.value, testList.getListLength());
+            testList.addItemToList(newItem);
+        } else if (popupType === "edit") {
+            // console.log("Attempting to edit task");
+            // console.log("itemToEdit, which we're getting values from, is " + itemToEdit);
+            // console.log(itemToEdit);
+            itemToEdit.title = title.value;
+            itemToEdit.description = description.value;
+            itemToEdit.dueDate = dueDate.value;
+            itemToEdit.prioritySelect = prioritySelect.value;
+        } else console.log("Some weird error happened yo");
         todoListController.drawTodoList(testList);
-        // console.log(testList);
         container.innerHTML = "";
     });
 
     closeButton.addEventListener("click", (event) => {
         event.preventDefault();
         container.innerHTML = "";
-    } )
+    })
 }
 
 export { drawPopup };

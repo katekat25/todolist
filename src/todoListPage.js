@@ -43,7 +43,7 @@ function listDisplayController(listObject) {
         const editButton = createDOMElement("button", { class: "todo-edit-button"}, "Edit", endContainer);
         editButton.addEventListener("click", (event) => {
             event.preventDefault();
-            drawPopup("edit");
+            drawPopup("edit", item);
         });
 
         //Delete button
