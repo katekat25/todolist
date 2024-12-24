@@ -15,14 +15,19 @@ function createDOMElement(type, attributes = {}, textContent = "", parent = null
 }
 
 function listDisplayController(listObject) {
-    const drawTodoItem = (item) => {
+    function drawTodoItem(item) {
         //Container div for todo items
         const todoContainer = createDOMElement("div", { class: "todo-item" }, "", pageContainer);
 
         //Check box container
         const checkboxContainer = createDOMElement("div", {}, "", todoContainer);
         //Check box
-        createDOMElement("input", { type: "checkbox", name: "isComplete", value: item.isComplete }, "", checkboxContainer);
+        const checkBox = createDOMElement("input", { type: "checkbox", name: "isComplete", value: item.isComplete }, "", checkboxContainer);
+        checkBox.addEventListener("click", () => {
+            item.isComplete ? item.isComplete = false : item.isComplete = true;
+            console.log(item);
+            console.log(item.isComplete);
+        });
 
         //Middle portion container
         const middleContainer = createDOMElement("div", {}, "", todoContainer);
