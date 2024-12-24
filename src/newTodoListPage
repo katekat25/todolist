@@ -1,9 +1,0 @@
-import { createDOMElement, pageContainer } from "./index";
-import { drawPopup } from "./popup";
-import { todoItemController } from "./todo-item";
-
-function drawNewTodoListPage() {
-    const message = createDOMElement();
-}
-
-export { drawNewTodoListPage }

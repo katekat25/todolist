@@ -1,5 +1,3 @@
-//Contains multiple todo items
-
 class TodoList {
     constructor (title) {
         this.list = [];
