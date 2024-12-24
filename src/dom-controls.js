@@ -25,8 +25,6 @@ function listDisplayController(listObject) {
         const checkBox = createDOMElement("input", { type: "checkbox", name: "isComplete", value: item.isComplete }, "", checkboxContainer);
         checkBox.addEventListener("click", () => {
             item.isComplete ? item.isComplete = false : item.isComplete = true;
-            console.log(item);
-            console.log(item.isComplete);
         });
 
         //Middle portion container
@@ -48,7 +46,7 @@ function listDisplayController(listObject) {
         //Edit button
         const editButton = createDOMElement("button", { class: "todo-edit-button" }, "Edit", endContainer);
         editButton.addEventListener("click", () => {
-            drawPopup("edit", item);
+            drawPopup("edit", listObject, item);
         });
 
         //Delete button
@@ -80,13 +78,13 @@ function listDisplayController(listObject) {
         const addButton = createDOMElement("button", { class: "todo-item-add-button" }, "+", pageContainer);
         addButton.addEventListener("click", (event) => {
             event.preventDefault();
-            drawPopup("addTask");
+            drawPopup("addTask", listObject);
         });
     }
     return { drawTodoItem, drawTodoList };
 };
 
-function drawPopup(popupType, itemToEdit = null) {
+function drawPopup(popupType, listObject, itemToEdit = null) {
     const modalContainer = document.querySelector(".modal");
 
     // Modal background
@@ -134,15 +132,15 @@ function drawPopup(popupType, itemToEdit = null) {
         event.preventDefault();
         if (popupType === "addTask") {
             console.log("adding task");
-            let newItem = todoItemController.generateTodoItem(title.value, description.value, dueDate.value, prioritySelect.value, testList.getListLength());
-            testList.addItemToList(newItem);
+            let newItem = todoItemController.generateTodoItem(title.value, description.value, dueDate.value, prioritySelect.value, listObject.getListLength());
+            listObject.addItemToList(newItem);
         } else if (popupType === "edit") {
             itemToEdit.title = title.value;
             itemToEdit.description = description.value;
             itemToEdit.dueDate = dueDate.value;
             itemToEdit.prioritySelect = prioritySelect.value;
         } else console.log("Some weird error happened yo");
-        todoListController.drawTodoList(testList);
+        todoListController.drawTodoList(listObject);
         modalContainer.innerHTML = "";
     });
 
