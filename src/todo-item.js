@@ -1,15 +1,16 @@
 class TodoItem {
-    constructor(title, description, dueDate, priority, listIndex) {
+    constructor(title, description, dueDate, priority, listIndex, isComplete) {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
         this.listIndex = listIndex;
+        this.isComplete = this.isComplete;
     }
 }
 
 const todoItemController = (function () {
-    const generateTodoItem = (title, description, dueDate, priority, listIndex) => new TodoItem(title, description, dueDate, priority, listIndex);
+    const generateTodoItem = (title, description, dueDate, priority, listIndex, isComplete) => new TodoItem(title, description, dueDate, priority, listIndex, isComplete);
     const deleteTodoItem = (item) => item = null;
     return { generateTodoItem, deleteTodoItem };
 })();

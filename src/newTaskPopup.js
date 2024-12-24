@@ -1,4 +1,4 @@
-import { createDOMElement, testList } from "./index";
+import { createDOMElement, testList, todoList } from "./index";
 import { todoItemController } from "./todo-item";
 import { drawTodoListDisplay } from "./todoListPage";
 
@@ -47,9 +47,9 @@ function drawModal() {
     const submitButton = createDOMElement("button", { type: "submit" }, "Submit", form);
     submitButton.addEventListener("click", (event) => {
         event.preventDefault();
-        let newItem = todoItemController.generateTodoItem(title.value, description.value, dueDate.value, prioritySelect.value, testList.getListLength());
+        let newItem = todoItemController.generateTodoItem(title.value, description.value, dueDate.value, prioritySelect.value, testList.getListLength(), false);
         testList.addItemToList(newItem);
-        
+        todoList.drawTodoList(testList);
         console.log(testList);
         container.innerHTML = "";
     });

@@ -1,20 +1,20 @@
 import "./styles.css";
 import { TodoList } from "./todo-list";
 import { TodoItem, todoItemController } from "./todo-item";
-import { drawModal } from "./newItemPage";
+import { drawModal } from "./newTaskPopup";
 import { listDisplayController } from "./todoListPage";
 
-// const todoList = listDisplayController();
+const todoList = listDisplayController();
 drawModal();
-// let testList = new TodoList;
-// let newItem = todoItemController.generateTodoItem("New thing to do", "This is an example.", "Right fucking now bro", "High", testList.getListLength());
-// testList.addItemToList(newItem);
-// let newItem2 = todoItemController.generateTodoItem("New thing to do", "This is an example.", "Right fucking now bro", "High", testList.getListLength());testList.addItemToList(newItem);
-// testList.addItemToList(newItem2);
-// let newItem3 = todoItemController.generateTodoItem("New thing to do", "This is an example.", "Right fucking now bro", "High", testList.getListLength());testList.addItemToList(newItem);
-// testList.addItemToList(newItem3);
-// todoList.drawTodoList(testList);
-// console.log(testList);
+let testList = new TodoList;
+let newItem = todoItemController.generateTodoItem("New thing to do", "This is an example.", "Right fucking now bro", "High", testList.getListLength(), false);
+testList.addItemToList(newItem);
+let newItem2 = todoItemController.generateTodoItem("Something else", "This is an example.", "Right fucking now bro", "High", testList.getListLength(), false);testList.addItemToList(newItem);
+testList.addItemToList(newItem2);
+let newItem3 = todoItemController.generateTodoItem("Important!", "This is an example.", "Right fucking now bro", "High", testList.getListLength(), false);testList.addItemToList(newItem);
+testList.addItemToList(newItem3);
+todoList.drawTodoList(testList);
+console.log(testList);
 
 function createDOMElement(type, attributes = {}, textContent = "", parent = null) {
     const element = document.createElement(type);
@@ -30,7 +30,7 @@ function createDOMElement(type, attributes = {}, textContent = "", parent = null
     return element;
 }
 
-export { createDOMElement, testList };
+export { createDOMElement, testList, todoList };
 
 // STEPS:
 // 1.)Write the logic that stores 

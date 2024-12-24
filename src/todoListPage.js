@@ -35,6 +35,7 @@ function listDisplayController() {
         // console.log(list);
         // console.log(typeof(list));
         // console.log("list.length is " + list.getListLength());
+        pageContainer.innerHTML = "";
         for (let i = 0; i < list.getListLength(); i++) {
             drawTodoItem(list[i]);
         }
