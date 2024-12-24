@@ -1,8 +1,9 @@
 //Contains multiple todo items
 
 class TodoList {
-    constructor () {
+    constructor (title) {
         this.list = [];
+        this.title = title;
     }
     addItemToList (item) {
         this.list.push(item);

@@ -4,9 +4,9 @@ import { TodoItem, todoItemController } from "./todo-item";
 import { drawPopup } from "./newTaskPopup";
 import { listDisplayController } from "./todoListPage";
 
-drawPopup();
 const todoList = listDisplayController();
-let testList = new TodoList;
+let testList = new TodoList("Example list");
+todoList.drawTodoList(testList);
 
 function createDOMElement(type, attributes = {}, textContent = "", parent = null) {
     const element = document.createElement(type);

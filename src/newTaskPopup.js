@@ -48,10 +48,10 @@ function drawPopup() {
     submitButton.addEventListener("click", (event) => {
         event.preventDefault();
         let newItem = todoItemController.generateTodoItem(title.value, description.value, dueDate.value, prioritySelect.value, testList.getListLength());
-        console.log(newItem.isComplete);
+        // console.log(newItem.isComplete);
         testList.addItemToList(newItem);
         todoList.drawTodoList(testList);
-        console.log(testList);
+        // console.log(testList);
         container.innerHTML = "";
     });
 
