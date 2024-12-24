@@ -1,6 +1,5 @@
 import { createDOMElement, testList, todoListController } from "./index";
 import { todoItemController } from "./todo-item";
-import { drawTodoListDisplay } from "./todoListPage";
 
 function drawPopup(popupType, itemToEdit = null) {
     const container = document.querySelector(".modal");
@@ -18,7 +17,7 @@ function drawPopup(popupType, itemToEdit = null) {
     const form = createDOMElement("form", {}, "", modalContent);
 
     // Title
-    createDOMElement("h1", {}, popupType == "add" ? "New task" : "Edit task", form);
+    createDOMElement("h1", {}, popupType == "addTask" ? "New task" : "Edit task", form);
 
     // Inputs container
     const inputs = createDOMElement("div", { class: "inputs" }, "", form);
@@ -48,14 +47,11 @@ function drawPopup(popupType, itemToEdit = null) {
     submitButton.addEventListener("click", (event) => {
         console.log("popup type is " + popupType);
         event.preventDefault();
-        if (popupType === "add") {
+        if (popupType === "addTask") {
             console.log("adding task");
             let newItem = todoItemController.generateTodoItem(title.value, description.value, dueDate.value, prioritySelect.value, testList.getListLength());
             testList.addItemToList(newItem);
         } else if (popupType === "edit") {
-            // console.log("Attempting to edit task");
-            // console.log("itemToEdit, which we're getting values from, is " + itemToEdit);
-            // console.log(itemToEdit);
             itemToEdit.title = title.value;
             itemToEdit.description = description.value;
             itemToEdit.dueDate = dueDate.value;

@@ -23,6 +23,24 @@ body {
     padding: 50px;
 }
 
+/* Sidebar styling */
+
+li {
+    /* list-style-type: none; */
+    /* border: 1px solid red; */
+}
+
+p {
+    display: inline-block;
+}
+
+.logo {
+    display: flex;
+    padding-bottom: 40px;
+    font-size: 2rem;
+    align-items: center;
+}
+
 /* Popup styling */
 
 .modal-background {

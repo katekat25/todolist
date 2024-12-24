@@ -1,9 +1,8 @@
-import { createDOMElement } from "./index";
+import { createDOMElement, pageContainer } from "./index";
 import { drawPopup } from "./popup";
 import { todoItemController } from "./todo-item";
 
 function listDisplayController(listObject) {
-    const pageContainer = document.querySelector(".content");
 
     const drawTodoItem = (item) => {
 
@@ -22,7 +21,7 @@ function listDisplayController(listObject) {
         const middleContainer = createDOMElement("div", {}, "", todoContainer);
 
         //Title
-        createDOMElement("div", { class: "todo-title" }, item.title, middleContainer);
+        const title = createDOMElement("div", { class: "todo-title" }, item.title, middleContainer);
 
         //Description
         createDOMElement("div", { class: "todo-description " }, item.description, middleContainer);
@@ -62,7 +61,11 @@ function listDisplayController(listObject) {
         console.log(listObject);
 
         pageContainer.innerHTML = "";
-        const todoListLitle = createDOMElement("h1", {}, listObject.title, pageContainer);
+        const todoListTitle = createDOMElement("h1", { contenteditable: "true" }, listObject.title, pageContainer);
+
+        todoListTitle.addEventListener("input", (event) => {
+            listObject.title = todoListTitle.innerHTML;
+        });
 
         const listArray = listObject.getList();
         for (let i = 0; i < listArray.length; i++) {
@@ -72,7 +75,7 @@ function listDisplayController(listObject) {
         const addButton = createDOMElement("button", { class: "todo-item-add-button" }, "+", pageContainer);
         addButton.addEventListener("click", (event) => {
             event.preventDefault();
-            drawPopup("add");
+            drawPopup("addTask");
         });
     }
     return { drawTodoItem, drawTodoList };

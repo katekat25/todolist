@@ -1,8 +1,8 @@
 import "./styles.css";
 import { TodoList } from "./todo-list";
-import { TodoItem, todoItemController } from "./todo-item";
-import { drawPopup } from "./popup";
 import { listDisplayController } from "./todoListPage";
+
+const pageContainer = document.querySelector(".content");
 
 let testList = new TodoList("Example list");
 const todoListController = listDisplayController(testList);
@@ -22,7 +22,7 @@ function createDOMElement(type, attributes = {}, textContent = "", parent = null
     return element;
 }
 
-export { createDOMElement, testList, todoListController };
+export { createDOMElement, testList, todoListController, pageContainer };
 
 // STEPS:
 // 1.)Write the logic that stores 
