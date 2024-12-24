@@ -1,8 +1,8 @@
-import { createDOMElement, testList, todoList } from "./index";
+import { createDOMElement, testList, todoListController } from "./index";
 import { todoItemController } from "./todo-item";
 import { drawTodoListDisplay } from "./todoListPage";
 
-function drawPopup() {
+function drawPopup(popupType) {
     const container = document.querySelector(".modal");
 
     // Modal background
@@ -18,7 +18,7 @@ function drawPopup() {
     const form = createDOMElement("form", {}, "", modalContent);
 
     // Title
-    createDOMElement("h1", {}, "New task", form);
+    createDOMElement("h1", {}, popupType == "add" ? "New task" : "Edit task", form);
 
     // Inputs container
     const inputs = createDOMElement("div", { class: "inputs" }, "", form);
@@ -50,7 +50,7 @@ function drawPopup() {
         let newItem = todoItemController.generateTodoItem(title.value, description.value, dueDate.value, prioritySelect.value, testList.getListLength());
         // console.log(newItem.isComplete);
         testList.addItemToList(newItem);
-        todoList.drawTodoList(testList);
+        todoListController.drawTodoList(testList);
         // console.log(testList);
         container.innerHTML = "";
     });

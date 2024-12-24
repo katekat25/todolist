@@ -1,12 +1,12 @@
 import "./styles.css";
 import { TodoList } from "./todo-list";
 import { TodoItem, todoItemController } from "./todo-item";
-import { drawPopup } from "./newTaskPopup";
+import { drawPopup } from "./popup";
 import { listDisplayController } from "./todoListPage";
 
-const todoList = listDisplayController();
 let testList = new TodoList("Example list");
-todoList.drawTodoList(testList);
+const todoListController = listDisplayController(testList);
+todoListController.drawTodoList(testList);
 
 function createDOMElement(type, attributes = {}, textContent = "", parent = null) {
     const element = document.createElement(type);
@@ -22,7 +22,7 @@ function createDOMElement(type, attributes = {}, textContent = "", parent = null
     return element;
 }
 
-export { createDOMElement, testList, todoList };
+export { createDOMElement, testList, todoListController };
 
 // STEPS:
 // 1.)Write the logic that stores 
