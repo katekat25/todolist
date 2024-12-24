@@ -108,3 +108,8 @@ input[type="checkbox"] {
     border-radius: 25px;
     z-index: 0;
 }
+
+/* Todo list styling */
+h1 {
+    display: inline-block;
+}
