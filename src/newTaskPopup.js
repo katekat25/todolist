@@ -47,7 +47,8 @@ function drawModal() {
     const submitButton = createDOMElement("button", { type: "submit" }, "Submit", form);
     submitButton.addEventListener("click", (event) => {
         event.preventDefault();
-        let newItem = todoItemController.generateTodoItem(title.value, description.value, dueDate.value, prioritySelect.value, testList.getListLength(), false);
+        let newItem = todoItemController.generateTodoItem(title.value, description.value, dueDate.value, prioritySelect.value, testList.getListLength());
+        console.log(newItem.isComplete);
         testList.addItemToList(newItem);
         todoList.drawTodoList(testList);
         console.log(testList);
