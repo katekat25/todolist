@@ -2,7 +2,7 @@ import { createDOMElement, testList, todoList } from "./index";
 import { todoItemController } from "./todo-item";
 import { drawTodoListDisplay } from "./todoListPage";
 
-function drawModal() {
+function drawPopup() {
     const container = document.querySelector(".modal");
 
     // Modal background
@@ -61,4 +61,4 @@ function drawModal() {
     } )
 }
 
-export { drawModal };
+export { drawPopup };

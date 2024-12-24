@@ -38,23 +38,11 @@ body {
     border: 1px solid blue;
 }
 
-
 .content {
     padding: 50px;
 }
-/* Toggle card view? */
-/* .content {
-    grid-row: 2 / 3;
-    grid-column: 2 / 3;
-    display: grid;
-    grid-template: 1fr 1fr / 1fr 1fr 1fr;
-    gap: 50px;
-    padding: 50px;
-} */
 
-.card {
-    border: 1px solid green;
-}
+/* Popup styling */
 
 .modal-background {
     position: fixed;
@@ -83,4 +71,26 @@ body {
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-columns: 1fr 1fr;
+}
+
+/* Todo item styling */
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+}
+
+.todo-title {
+    font-weight: 600;
+}
+
+.todo-description {
+    font-style: italic;
+    font-weight: 300;
 }

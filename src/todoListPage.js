@@ -33,11 +33,7 @@ function listDisplayController() {
     function drawTodoList(listObject) {
         pageContainer.innerHTML = "";
         const listArray = listObject.getList();
-        console.log(listArray);
-        console.log(listArray[0]);
-        console.log(listArray.length);
         for (let i = 0; i < listArray.length; i++) {
-            console.log(listObject.list[i]);
             drawTodoItem(listObject.list[i]);
         }
     }

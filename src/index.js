@@ -1,11 +1,11 @@
 import "./styles.css";
 import { TodoList } from "./todo-list";
 import { TodoItem, todoItemController } from "./todo-item";
-import { drawModal } from "./newTaskPopup";
+import { drawPopup } from "./newTaskPopup";
 import { listDisplayController } from "./todoListPage";
 
+drawPopup();
 const todoList = listDisplayController();
-drawModal();
 let testList = new TodoList;
 
 function createDOMElement(type, attributes = {}, textContent = "", parent = null) {
