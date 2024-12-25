@@ -60,8 +60,8 @@ function listDisplayController(listObject) {
     }
 
     function drawTodoList() {
-        console.log("In drawTodoList.");
-        console.log(listObject);
+        // console.log("In drawTodoList.");
+        // console.log(listObject);
 
         pageContainer.innerHTML = "";
         const todoListTitle = createDOMElement("h1", { contenteditable: "true" }, listObject.title, pageContainer);
@@ -150,8 +150,17 @@ function drawPopup(popupType, listObject, itemToEdit = null) {
     })
 }
 
-function drawNewTodoListPage() {
-    const message = createDOMElement();
+// Are we cooking chat?
+
+function drawSidebarTitles(listObject) {
+    const sidebarTitleWrapper = document.querySelector(".my-lists")
+    const titleLi = createDOMElement("li", { class: "sidebar-list-title" }, "", sidebarTitleWrapper);
+    createDOMElement("a", { class: "sidebar-list-link" }, listObject.title, titleLi);
+
+    const listTitleArray = listObject.getList();
+    for (let i = 0; i < listTitleArray.length; i++) {
+        drawTodoItem(listObject.list[i].title);
+    }
 }
 
 export { drawPopup, listDisplayController, createDOMElement, drawNewTodoListPage }
