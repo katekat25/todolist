@@ -1,10 +1,14 @@
 import "./styles.css";
-import { TodoList } from "./todo-list";
-import { drawTodoList, listDisplayController } from "./dom-controls";
+import { List } from "./todo-list";
+import { drawTodoList, listDisplayController, drawSidebarTitles } from "./dom-controls";
 
-let testList = new TodoList("Example list");
+let todoList = new List("Example list");
+let listOfTodoLists = new List("");
+listOfTodoLists.addItemToList(todoList);
+
 console.log(listDisplayController);
-const todoListController = listDisplayController(testList);
-todoListController.drawTodoList(testList);
+const todoListController = listDisplayController(todoList, listOfTodoLists);
+todoListController.drawTodoList(todoList);
+drawSidebarTitles(listOfTodoLists);
 
-export { testList, todoListController };
+export { todoList, listOfTodoLists, todoListController };

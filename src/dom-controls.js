@@ -1,4 +1,4 @@
-import { todoListController, testList } from "./index";
+import { todoListController } from "./index";
 import { todoItemController } from "./todo-item";
 
 const pageContainer = document.querySelector(".content");
@@ -14,7 +14,7 @@ function createDOMElement(type, attributes = {}, textContent = "", parent = null
     return element;
 }
 
-function listDisplayController(listObject) {
+function listDisplayController(listObject, containerListObject) {
     function drawTodoItem(item) {
         //Container div for todo items
         const todoContainer = createDOMElement("div", { class: "todo-item" }, "", pageContainer);
@@ -68,6 +68,7 @@ function listDisplayController(listObject) {
 
         todoListTitle.addEventListener("input", (event) => {
             listObject.title = todoListTitle.innerHTML;
+            drawSidebarTitles(containerListObject);
         });
 
         const listArray = listObject.getList();
@@ -152,15 +153,37 @@ function drawPopup(popupType, listObject, itemToEdit = null) {
 
 // Are we cooking chat?
 
-function drawSidebarTitles(listObject) {
-    const sidebarTitleWrapper = document.querySelector(".my-lists")
-    const titleLi = createDOMElement("li", { class: "sidebar-list-title" }, "", sidebarTitleWrapper);
-    createDOMElement("a", { class: "sidebar-list-link" }, listObject.title, titleLi);
+//What the fuck man who puts a fucking pile of ALMONDS on a HAM AND CHEESE CROISSANT and doesnt LIST ALMONDS AS A MAIN INGREDIENT
+//Fuck this place wtf that shit's crazy like y'all are trying to kill me at 10:30 in the morning on a THURSDAY
+//Do i just get another sandwich or like what do i do? if i tell them im allergic there will be a big panic? but i need lunch
+//Well it was just a little sliver and almonds have never given me much of a problem in the past so I guess it's fine
+//Ok back to coding
+//I feel like I am going to throw up
 
-    const listTitleArray = listObject.getList();
+function drawSidebarTitles(listHolderObject) {
+    console.log("in drawSidebarTitles");
+    const sidebarTitleWrapper = document.querySelector(".my-lists");
+    sidebarTitleWrapper.innerHTML = "";
+
+    function drawTitle(title) {
+        console.log("in drawTitle");
+        const titleLi = createDOMElement("li", { class: "sidebar-list-title" }, "", sidebarTitleWrapper);
+        createDOMElement("a", { class: "sidebar-list-link" }, title, titleLi);
+    }
+
+    // console.log("listHolderObject:");
+    // console.log(listHolderObject);
+    // console.log("listHolderObject.getList()");
+    // console.log(listHolderObject.getList());
+    
+    const listTitleArray = listHolderObject.getList();
+    // console.log("listTitleArray.length:");
+    // console.log(listTitleArray.length)
     for (let i = 0; i < listTitleArray.length; i++) {
-        drawTodoItem(listObject.list[i].title);
+        // console.log("listTitleArray.list[i].title:");
+        // console.log(listTitleArray[i].title);
+        drawTitle(listTitleArray[i].title);
     }
 }
 
-export { drawPopup, listDisplayController, createDOMElement, drawNewTodoListPage }
+export { drawPopup, listDisplayController, createDOMElement, drawSidebarTitles }

@@ -1,4 +1,4 @@
-class TodoList {
+class List {
     constructor (title) {
         this.list = [];
         this.title = title;
@@ -23,4 +23,4 @@ class TodoList {
     }
 }
 
-export { TodoList }
+export { List }
