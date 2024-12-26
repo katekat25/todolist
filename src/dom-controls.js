@@ -65,7 +65,7 @@ function listDisplayController(containerListObject) {
         const todoListTitle = createDOMElement("h1", { contenteditable: "true" }, list.title, pageContainer);
 
         todoListTitle.addEventListener("input", (event) => {
-            listObject.title = todoListTitle.innerHTML;
+            list.title = todoListTitle.innerHTML;
             drawSidebarTitles(containerListObject);
         });
 
