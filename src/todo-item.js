@@ -7,12 +7,8 @@ class TodoItem {
         this.listIndex = listIndex;
         this.isComplete = isComplete;
     }
+
+    deleteItem = () => this.item = null;
 }
 
-const todoItemController = (function () {
-    const generateTodoItem = (title, description, dueDate, priority, listIndex, isComplete) => new TodoItem(title, description, dueDate, priority, listIndex, isComplete);
-    const deleteTodoItem = (item) => item = null;
-    return { generateTodoItem, deleteTodoItem };
-})();
-
-export { TodoItem, todoItemController };
+export { TodoItem };

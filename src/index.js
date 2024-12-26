@@ -6,7 +6,7 @@ let todoList = new List("Example list", 0);
 let listOfTodoLists = new List("");
 listOfTodoLists.addItemToList(todoList);
 
-const todoListController = listDisplayController(todoList, listOfTodoLists);
+const todoListController = listDisplayController(listOfTodoLists);
 todoListController.drawTodoList(todoList);
 drawSidebarTitles(listOfTodoLists);
 

@@ -1,5 +1,6 @@
 import { todoListController } from "./index";
-import { todoItemController } from "./todo-item";
+import { List } from "./todo-list";
+import { TodoItem } from "./todo-item";
 
 const pageContainer = document.querySelector(".content");
 
@@ -14,8 +15,8 @@ function createDOMElement(type, attributes = {}, textContent = "", parent = null
     return element;
 }
 
-function listDisplayController(listObject, containerListObject) {
-    function drawTodoItem(item) {
+function listDisplayController(containerListObject) {
+    function drawTodoItem(listObject, item) {
         //Container div for todo items
         const todoContainer = createDOMElement("div", { class: "todo-item" }, "", pageContainer);
 
@@ -54,30 +55,29 @@ function listDisplayController(listObject, containerListObject) {
         deleteButton.addEventListener("click", () => {
             //Redraw list
             listObject.removeItemFromList(item);
-            todoItemController.deleteTodoItem(item);
-            drawTodoList();
+            item.deleteItem();
+            drawTodoList(listObject);
         })
     }
 
-    function drawTodoList() {
-
+    function drawTodoList(list) {
         pageContainer.innerHTML = "";
-        const todoListTitle = createDOMElement("h1", { contenteditable: "true" }, listObject.title, pageContainer);
+        const todoListTitle = createDOMElement("h1", { contenteditable: "true" }, list.title, pageContainer);
 
         todoListTitle.addEventListener("input", (event) => {
             listObject.title = todoListTitle.innerHTML;
             drawSidebarTitles(containerListObject);
         });
 
-        const listArray = listObject.getList();
+        const listArray = list.getList();
         for (let i = 0; i < listArray.length; i++) {
-            drawTodoItem(listObject.list[i]);
+            drawTodoItem(list, list.list[i]);
         }
 
         const addButton = createDOMElement("button", { class: "todo-item-add-button" }, "+", pageContainer);
         addButton.addEventListener("click", (event) => {
             event.preventDefault();
-            drawPopup("addTask", listObject);
+            drawPopup("addTask", list);
         });
     }
     return { drawTodoItem, drawTodoList };
@@ -95,42 +95,53 @@ function drawPopup(popupType, listObject, itemToEdit = null) {
     // Form
     const form = createDOMElement("form", {}, "", modalContent);
     // Title
-    createDOMElement("h1", {}, popupType == "addTask" ? "New task" : "Edit task", form);
+    createDOMElement("h1", {}, popupType == "addTask" ? "New task" :
+            popupType == "addList" ? "New list" :
+            "Edit task",
+            form);
     // Inputs container
     const inputs = createDOMElement("div", { class: "inputs" }, "", form);
     // Title Input
     createDOMElement("label", { for: "title" }, "Title:", inputs);
     const title = createDOMElement("input", { type: "text", id: "title" }, "", inputs);
-    // Description Input
-    createDOMElement("label", { for: "description" }, "Description:", inputs);
-    const description = createDOMElement("input", { type: "text", id: "description" }, "", inputs);
-    // Due Date Input
-    createDOMElement("label", { for: "dueDate" }, "Due date:", inputs);
-    const dueDate = createDOMElement("input", { type: "datetime-local", id: "dueDate" }, "", inputs);
-    // Priority Select
-    createDOMElement("label", { for: "priority" }, "Priority:", inputs);
-    const prioritySelect = createDOMElement("select", { name: "Priority" }, "", inputs);
 
-    createDOMElement("option", { value: "1" }, "High", prioritySelect);
-    createDOMElement("option", { value: "2" }, "Medium", prioritySelect);
-    createDOMElement("option", { value: "3" }, "Low", prioritySelect);
+    //If I don't define prioritySelect here I get a reference error for some reason, even though description and dueDate don't. w/e
+    let prioritySelect;
+    if (popupType !== "addList") {
+        // Description Input
+        createDOMElement("label", { for: "description" }, "Description:", inputs);
+        const description = createDOMElement("input", { type: "text", id: "description" }, "", inputs);
+        // Due Date Input
+        createDOMElement("label", { for: "dueDate" }, "Due date:", inputs);
+        const dueDate = createDOMElement("input", { type: "datetime-local", id: "dueDate" }, "", inputs);
+        // Priority Select
+        createDOMElement("label", { for: "priority" }, "Priority:", inputs);
+        prioritySelect = createDOMElement("select", { name: "Priority" }, "", inputs);
+
+        createDOMElement("option", { value: "1" }, "High", prioritySelect);
+        createDOMElement("option", { value: "2" }, "Medium", prioritySelect);
+        createDOMElement("option", { value: "3" }, "Low", prioritySelect);
+    }
 
     // Submit Button
     const submitButton = createDOMElement("button", { type: "submit" }, "Submit", form);
     submitButton.addEventListener("click", (event) => {
-        console.log("popup type is " + popupType);
         event.preventDefault();
         if (popupType === "addTask") {
-            console.log("adding task");
-            let newItem = todoItemController.generateTodoItem(title.value, description.value, dueDate.value, prioritySelect.value, listObject.getListLength());
+            let newItem = new TodoItem(title.value, description.value, dueDate.value, prioritySelect.value, listObject.getListLength(), false);
             listObject.addItemToList(newItem);
+            todoListController.drawTodoList(listObject);
         } else if (popupType === "edit") {
             itemToEdit.title = title.value;
             itemToEdit.description = description.value;
             itemToEdit.dueDate = dueDate.value;
             itemToEdit.prioritySelect = prioritySelect.value;
+            todoListController.drawTodoList(listObject);
+        } else if (popupType === "addList") {
+            let newTodoList = new List(title.value, listObject.getListLength());
+            listObject.addItemToList(newTodoList);
+            drawSidebarTitles(listObject);
         } else console.log("Some weird error happened yo");
-        todoListController.drawTodoList(listObject);
         modalContainer.innerHTML = "";
     });
 
@@ -145,19 +156,25 @@ function drawSidebarTitles(listHolderObject) {
     const sidebarTitleWrapper = document.querySelector(".my-lists");
     sidebarTitleWrapper.innerHTML = "";
 
-    function drawTitle(title) {
+    function drawTitle(entry) {
         const titleLi = createDOMElement("li", { class: "sidebar-list-title" }, "", sidebarTitleWrapper);
-        createDOMElement("a", { class: "sidebar-list-link" }, title, titleLi);
+        const link = createDOMElement("a", { class: "sidebar-list-link" }, entry.title, titleLi);
+        link.addEventListener("click", (event) => {
+            todoListController.drawTodoList(entry);
+        })
     }
-    
+
     const listTitleArray = listHolderObject.getList();
     for (let i = 0; i < listTitleArray.length; i++) {
-        drawTitle(listTitleArray[i].title);
+        drawTitle(listTitleArray[i]);
     }
 
     const newListLi = createDOMElement("li", { class: "sidebar-new-list" }, "", sidebarTitleWrapper);
     //add href to below later
-    createDOMElement("a", { class: "sidebar-new-list-link "}, "Create a new list", newListLi);
+    createDOMElement("a", { class: "sidebar-new-list-link " }, "Create a new list", newListLi);
+    newListLi.addEventListener("click", (event) => {
+        drawPopup("addList", listHolderObject);
+    });
 }
 
 export { drawPopup, listDisplayController, createDOMElement, drawSidebarTitles }
