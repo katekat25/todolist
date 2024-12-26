@@ -159,7 +159,7 @@ function drawSidebarTitles(listHolderObject) {
     function drawTitle(entry) {
         const titleLi = createDOMElement("li", { class: "sidebar-list-title" }, "", sidebarTitleWrapper);
         const link = createDOMElement("a", { class: "sidebar-list-link" }, entry.title, titleLi);
-        link.addEventListener("click", (event) => {
+        titleLi.addEventListener("click", (event) => {
             todoListController.drawTodoList(entry);
         })
     }
