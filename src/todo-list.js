@@ -1,7 +1,8 @@
 class List {
-    constructor (title) {
+    constructor (title, listIndex) {
         this.list = [];
         this.title = title;
+        this.listIndex = listIndex;
     }
     addItemToList (item) {
         this.list.push(item);
