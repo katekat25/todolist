@@ -41,6 +41,14 @@ p {
     align-items: center;
 }
 
+.sidebar-new-list {
+    list-style-type: "+  ";
+}
+
+.sidebar-new-list-link {
+    font-weight: 300;
+}
+
 /* Popup styling */
 
 .modal-background {

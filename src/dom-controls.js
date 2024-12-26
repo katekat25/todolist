@@ -60,8 +60,6 @@ function listDisplayController(listObject, containerListObject) {
     }
 
     function drawTodoList() {
-        // console.log("In drawTodoList.");
-        // console.log(listObject);
 
         pageContainer.innerHTML = "";
         const todoListTitle = createDOMElement("h1", { contenteditable: "true" }, listObject.title, pageContainer);
@@ -90,34 +88,25 @@ function drawPopup(popupType, listObject, itemToEdit = null) {
 
     // Modal background
     const modalBackground = createDOMElement("div", { class: "modal-background" }, "", modalContainer);
-
     // Modal content
     const modalContent = createDOMElement("div", { class: "modal-content" }, "", modalBackground);
-
     // Close button
     const closeButton = createDOMElement("Button", { class: "close-button" }, "X", modalContent);
-
     // Form
     const form = createDOMElement("form", {}, "", modalContent);
-
     // Title
     createDOMElement("h1", {}, popupType == "addTask" ? "New task" : "Edit task", form);
-
     // Inputs container
     const inputs = createDOMElement("div", { class: "inputs" }, "", form);
-
     // Title Input
     createDOMElement("label", { for: "title" }, "Title:", inputs);
     const title = createDOMElement("input", { type: "text", id: "title" }, "", inputs);
-
     // Description Input
     createDOMElement("label", { for: "description" }, "Description:", inputs);
     const description = createDOMElement("input", { type: "text", id: "description" }, "", inputs);
-
     // Due Date Input
     createDOMElement("label", { for: "dueDate" }, "Due date:", inputs);
     const dueDate = createDOMElement("input", { type: "datetime-local", id: "dueDate" }, "", inputs);
-
     // Priority Select
     createDOMElement("label", { for: "priority" }, "Priority:", inputs);
     const prioritySelect = createDOMElement("select", { name: "Priority" }, "", inputs);
@@ -145,45 +134,30 @@ function drawPopup(popupType, listObject, itemToEdit = null) {
         modalContainer.innerHTML = "";
     });
 
+    //Close button
     closeButton.addEventListener("click", (event) => {
         event.preventDefault();
         modalContainer.innerHTML = "";
     })
 }
 
-// Are we cooking chat?
-
-//What the fuck man who puts a fucking pile of ALMONDS on a HAM AND CHEESE CROISSANT and doesnt LIST ALMONDS AS A MAIN INGREDIENT
-//Fuck this place wtf that shit's crazy like y'all are trying to kill me at 10:30 in the morning on a THURSDAY
-//Do i just get another sandwich or like what do i do? if i tell them im allergic there will be a big panic? but i need lunch
-//Well it was just a little sliver and almonds have never given me much of a problem in the past so I guess it's fine
-//Ok back to coding
-//I feel like I am going to throw up
-
 function drawSidebarTitles(listHolderObject) {
-    console.log("in drawSidebarTitles");
     const sidebarTitleWrapper = document.querySelector(".my-lists");
     sidebarTitleWrapper.innerHTML = "";
 
     function drawTitle(title) {
-        console.log("in drawTitle");
         const titleLi = createDOMElement("li", { class: "sidebar-list-title" }, "", sidebarTitleWrapper);
         createDOMElement("a", { class: "sidebar-list-link" }, title, titleLi);
     }
-
-    // console.log("listHolderObject:");
-    // console.log(listHolderObject);
-    // console.log("listHolderObject.getList()");
-    // console.log(listHolderObject.getList());
     
     const listTitleArray = listHolderObject.getList();
-    // console.log("listTitleArray.length:");
-    // console.log(listTitleArray.length)
     for (let i = 0; i < listTitleArray.length; i++) {
-        // console.log("listTitleArray.list[i].title:");
-        // console.log(listTitleArray[i].title);
         drawTitle(listTitleArray[i].title);
     }
+
+    const newListLi = createDOMElement("li", { class: "sidebar-new-list" }, "", sidebarTitleWrapper);
+    //add href to below later
+    createDOMElement("a", { class: "sidebar-new-list-link "}, "Create a new list", newListLi);
 }
 
 export { drawPopup, listDisplayController, createDOMElement, drawSidebarTitles }
