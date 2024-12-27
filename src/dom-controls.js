@@ -84,16 +84,16 @@ function listDisplayController(containerListObject) {
 };
 
 function drawPopup(popupType, listObject, itemToEdit = null) {
-    const modalContainer = document.querySelector(".modal");
+    const popupContainer = document.querySelector(".popup");
 
-    // Modal background
-    const modalBackground = createDOMElement("div", { class: "modal-background" }, "", modalContainer);
-    // Modal content
-    const modalContent = createDOMElement("div", { class: "modal-content" }, "", modalBackground);
+    // Popup background
+    const popupBackground = createDOMElement("div", { class: "popup-background" }, "", popupContainer);
+    // Popup content
+    const popupContent = createDOMElement("div", { class: "popup-content" }, "", popupBackground);
     // Close button
-    const closeButton = createDOMElement("Button", { class: "close-button" }, "X", modalContent);
+    const closeButton = createDOMElement("Button", { class: "close-button" }, "X", popupContent);
     // Form
-    const form = createDOMElement("form", {}, "", modalContent);
+    const form = createDOMElement("form", {}, "", popupContent);
     // Title
     createDOMElement("h1", {}, popupType == "addTask" ? "New task" :
             popupType == "addList" ? "New list" :
@@ -142,13 +142,13 @@ function drawPopup(popupType, listObject, itemToEdit = null) {
             listObject.addItemToList(newTodoList);
             drawSidebarTitles(listObject);
         } else console.log("Some weird error happened yo");
-        modalContainer.innerHTML = "";
+        popupContainer.innerHTML = "";
     });
 
     //Close button
     closeButton.addEventListener("click", (event) => {
         event.preventDefault();
-        modalContainer.innerHTML = "";
+        popupContainer.innerHTML = "";
     })
 }
 
