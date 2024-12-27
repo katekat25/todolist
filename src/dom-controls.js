@@ -118,9 +118,9 @@ function drawPopup(popupType, listObject, itemToEdit = null) {
         createDOMElement("label", { for: "priority" }, "Priority:", inputs);
         prioritySelect = createDOMElement("select", { name: "Priority" }, "", inputs);
 
-        createDOMElement("option", { value: "1" }, "High", prioritySelect);
-        createDOMElement("option", { value: "2" }, "Medium", prioritySelect);
-        createDOMElement("option", { value: "3" }, "Low", prioritySelect);
+        createDOMElement("option", { value: "High" }, "High", prioritySelect);
+        createDOMElement("option", { value: "Medium" }, "Medium", prioritySelect);
+        createDOMElement("option", { value: "Low" }, "Low", prioritySelect);
     }
 
     // Submit Button

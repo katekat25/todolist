@@ -1,6 +1,6 @@
 import "./styles.css";
 import { List } from "./todo-list";
-import { drawTodoList, listDisplayController, drawSidebarTitles } from "./dom-controls";
+import { listDisplayController, drawSidebarTitles } from "./dom-controls";
 
 let todoList = new List("Example list", 0);
 let listOfTodoLists = new List("");
