@@ -56,6 +56,15 @@ p {
 
 /* Popup styling */
 
+@keyframes slide-in {
+    from {
+        translate: 0 150vh;
+    }
+    to {
+        translate: 0 0;
+    }
+}
+
 .modal-background {
     position: fixed;
     top: 0;
@@ -79,6 +88,8 @@ p {
     margin-top: -225px;
     padding: 25px;
     z-index: 2;
+    animation-duration: 0.3s;
+    animation-name: slide-in;
 }
 
 .inputs {
