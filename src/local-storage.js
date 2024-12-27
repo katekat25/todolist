@@ -1,3 +1,5 @@
+//do this tomorrow
+
 function localStorage() {
     function saveItem(itemType, item) {
         if (!localStorage.getItem(`${itemType}`)) {
