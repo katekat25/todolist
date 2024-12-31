@@ -12,35 +12,33 @@ function createDOMElement(type, attributes = {}, textContent = "", parent = null
     return element;
 }
 
-
-
-function drawSidebarTitles(listHolderObject) {
+function drawSidebar(rootList) {
     const sidebarTitleWrapper = document.querySelector(".my-lists");
     sidebarTitleWrapper.innerHTML = "";
 
-    listHolderObject.getList().forEach(entry => {
+    rootList.getList().forEach(entry => {
         const titleLi = createDOMElement("li", { class: "sidebar-list-title" }, "", sidebarTitleWrapper);
         createDOMElement("a", { class: "sidebar-list-link" }, entry.title, titleLi);
         titleLi.addEventListener("click", () => {
-            drawTodoList(entry);
+            drawTodoList(entry, rootList);
         });
     });
 
     const newListLi = createDOMElement("li", { class: "sidebar-new-list" }, "", sidebarTitleWrapper);
     createDOMElement("a", { class: "sidebar-new-list-link" }, "Create a new list", newListLi);
     newListLi.addEventListener("click", () => {
-        drawPopup("addList", listHolderObject);
+        drawPopup("addList", rootList);
     });
 }
 
-function drawTodoList(todoList) {
+function drawTodoList(todoList, rootList) {
     const pageContainer = document.querySelector(".content");
     pageContainer.innerHTML = "";
     const todoListTitle = createDOMElement("h1", { contenteditable: "true" }, todoList.title, pageContainer);
 
     todoListTitle.addEventListener("input", () => {
         todoList.title = todoListTitle.textContent;
-        drawSidebarTitles(listContainer);
+        drawSidebar(rootList);
     });
 
     todoList.getList().forEach(todoItem => {
@@ -50,11 +48,11 @@ function drawTodoList(todoList) {
     const addButton = createDOMElement("button", { class: "todo-item-add-button" }, "+", pageContainer);
     addButton.addEventListener("click", (event) => {
         event.preventDefault();
-        drawPopup("addTask", todoList);
+        drawPopup("addTask", rootList, todoList);
     });
 }
 
-function drawPopup(popupType, listObject, itemToEdit = null) {
+function drawPopup(popupType, rootList, todoList = null, itemToEdit = null) {
     const popupContainer = document.querySelector(".popup");
     popupContainer.innerHTML = "";
 
@@ -104,30 +102,28 @@ function drawPopup(popupType, listObject, itemToEdit = null) {
                 descriptionInput?.value,
                 dueDateInput?.value,
                 prioritySelect?.value,
-                listObject.getListLength(),
+                todoList.getListLength(),
                 false
             );
-            listObject.addItemToList(newItem);
-            drawTodoList(listObject);
+            todoList.addItemToList(newItem);
+            drawTodoList(todoList);
         } else if (popupType === "edit" && itemToEdit) {
             itemToEdit.title = titleInput.value;
             itemToEdit.description = descriptionInput.value;
             itemToEdit.dueDate = dueDateInput.value;
             itemToEdit.priority = prioritySelect.value;
-            drawTodoList(listObject);
+            drawTodoList(todoList);
         } else if (popupType === "addList") {
-            const newList = new List(titleInput.value, listObject.getListLength());
-            listObject.addItemToList(newList);
-            drawSidebarTitles(listObject);
+            const newList = new List(titleInput.value, rootList.getListLength());
+            rootList.addItemToList(newList);
+            drawSidebar(rootList);
         }
 
         popupContainer.innerHTML = "";
     });
 }
 
-
-
-function drawTodoItem(todoList, todoItem) {
+function drawTodoItem(todoList, todoItem, rootList) {
     const pageContainer = document.querySelector(".content");
     const todoContainer = createDOMElement("div", { class: "todo-item" }, "", pageContainer);
 
@@ -149,7 +145,7 @@ function drawTodoItem(todoList, todoItem) {
     const endContainer = createDOMElement("div", {}, "", todoContainer);
     const editButton = createDOMElement("button", { class: "todo-edit-button" }, "Edit", endContainer);
     editButton.addEventListener("click", () => {
-        drawPopup("edit", todoList, todoItem);
+        drawPopup("edit", rootList, todoList, todoItem);
     });
 
     const deleteButton = createDOMElement("button", { class: "todo-delete-button" }, "Delete", endContainer);
@@ -160,4 +156,4 @@ function drawTodoItem(todoList, todoItem) {
     });
 }
 
-export { createDOMElement, drawSidebarTitles, drawTodoList };
+export { createDOMElement, drawSidebar, drawTodoList };
