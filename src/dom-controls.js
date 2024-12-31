@@ -1,4 +1,5 @@
 import { TodoItem } from "./todo-item.js";
+import { List } from "./todo-list.js";
 
 function createDOMElement(type, attributes = {}, textContent = "", parent = null) {
     const element = document.createElement(type);
