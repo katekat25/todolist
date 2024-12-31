@@ -6,9 +6,9 @@ const pageContainer = document.querySelector(".content");
 
 function createDOMElement(type, attributes = {}, textContent = "", parent = null) {
     const element = document.createElement(type);
-    for (const [key, value] of Object.entries(attributes)) {
+    Object.entries(attributes).forEach(([key, value]) => {
         element.setAttribute(key, value);
-    }
+    });
     if (textContent) element.textContent = textContent;
     if (parent) parent.appendChild(element);
 
@@ -17,62 +17,49 @@ function createDOMElement(type, attributes = {}, textContent = "", parent = null
 
 function listDisplayController(containerListObject) {
     function drawTodoItem(listObject, item) {
-        //Container div for todo items
         const todoContainer = createDOMElement("div", { class: "todo-item" }, "", pageContainer);
 
-        //Check box container
         const checkboxContainer = createDOMElement("div", {}, "", todoContainer);
-        //Check box
         const checkBox = createDOMElement("input", { type: "checkbox", name: "isComplete", value: item.isComplete }, "", checkboxContainer);
+        checkBox.checked = item.isComplete;
         checkBox.addEventListener("click", () => {
-            item.isComplete ? item.isComplete = false : item.isComplete = true;
+            item.isComplete = !item.isComplete;
         });
 
-        //Middle portion container
         const middleContainer = createDOMElement("div", {}, "", todoContainer);
-        //Title
-        const title = createDOMElement("div", { class: "todo-title" }, item.title, middleContainer);
-        //Description
-        createDOMElement("div", { class: "todo-description " }, item.description, middleContainer);
+        createDOMElement("div", { class: "todo-title" }, item.title, middleContainer);
+        createDOMElement("div", { class: "todo-description" }, item.description, middleContainer);
 
-        //Container for todo item details
         const todoDetails = createDOMElement("div", { class: "todo-details" }, "", middleContainer);
-        //Due date
-        createDOMElement("div", { class: "todo-due-date" }, "Due: " + item.dueDate, todoDetails);
-        //Priority (may edit this out later and change title color instead)
-        createDOMElement("div", { class: "todo-priority" }, "Priority: " + item.priority, todoDetails);
+        createDOMElement("div", { class: "todo-due-date" }, `Due: ${item.dueDate}`, todoDetails);
+        createDOMElement("div", { class: "todo-priority" }, `Priority: ${item.priority}`, todoDetails);
 
-        //End portion container
-        const endContainer = createDOMElement("div", {}, "", todoContainer)
-        //Edit button
+        const endContainer = createDOMElement("div", {}, "", todoContainer);
         const editButton = createDOMElement("button", { class: "todo-edit-button" }, "Edit", endContainer);
         editButton.addEventListener("click", () => {
             drawPopup("edit", listObject, item);
         });
 
-        //Delete button
         const deleteButton = createDOMElement("button", { class: "todo-delete-button" }, "Delete", endContainer);
         deleteButton.addEventListener("click", () => {
-            //Redraw list
             listObject.removeItemFromList(item);
             item.deleteItem();
             drawTodoList(listObject);
-        })
+        });
     }
 
     function drawTodoList(list) {
         pageContainer.innerHTML = "";
         const todoListTitle = createDOMElement("h1", { contenteditable: "true" }, list.title, pageContainer);
 
-        todoListTitle.addEventListener("input", (event) => {
-            list.title = todoListTitle.innerHTML;
+        todoListTitle.addEventListener("input", () => {
+            list.title = todoListTitle.textContent;
             drawSidebarTitles(containerListObject);
         });
 
-        const listArray = list.getList();
-        for (let i = 0; i < listArray.length; i++) {
-            drawTodoItem(list, list.list[i]);
-        }
+        list.getList().forEach(item => {
+            drawTodoItem(list, item);
+        });
 
         const addButton = createDOMElement("button", { class: "todo-item-add-button" }, "+", pageContainer);
         addButton.addEventListener("click", (event) => {
@@ -80,101 +67,98 @@ function listDisplayController(containerListObject) {
             drawPopup("addTask", list);
         });
     }
+
     return { drawTodoItem, drawTodoList };
-};
+}
 
 function drawPopup(popupType, listObject, itemToEdit = null) {
     const popupContainer = document.querySelector(".popup");
+    popupContainer.innerHTML = "";
 
-    // Popup background
     const popupBackground = createDOMElement("div", { class: "popup-background" }, "", popupContainer);
-    // Popup content
     const popupContent = createDOMElement("div", { class: "popup-content" }, "", popupBackground);
-    // Close button
-    const closeButton = createDOMElement("Button", { class: "close-button" }, "X", popupContent);
-    // Form
-    const form = createDOMElement("form", {}, "", popupContent);
-    // Title
-    createDOMElement("h1", {}, popupType == "addTask" ? "New task" :
-            popupType == "addList" ? "New list" :
-            "Edit task",
-            form);
-    // Inputs container
-    const inputs = createDOMElement("div", { class: "inputs" }, "", form);
-    // Title Input
-    createDOMElement("label", { for: "title" }, "Title:", inputs);
-    const title = createDOMElement("input", { type: "text", id: "title" }, "", inputs);
-
-    //If I don't define prioritySelect here I get a reference error for some reason, even though description and dueDate don't. w/e
-    let prioritySelect;
-    if (popupType !== "addList") {
-        // Description Input
-        createDOMElement("label", { for: "description" }, "Description:", inputs);
-        const description = createDOMElement("input", { type: "text", id: "description" }, "", inputs);
-        // Due Date Input
-        createDOMElement("label", { for: "dueDate" }, "Due date:", inputs);
-        const dueDate = createDOMElement("input", { type: "datetime-local", id: "dueDate" }, "", inputs);
-        // Priority Select
-        createDOMElement("label", { for: "priority" }, "Priority:", inputs);
-        prioritySelect = createDOMElement("select", { name: "Priority" }, "", inputs);
-
-        createDOMElement("option", { value: "High" }, "High", prioritySelect);
-        createDOMElement("option", { value: "Medium" }, "Medium", prioritySelect);
-        createDOMElement("option", { value: "Low" }, "Low", prioritySelect);
-    }
-
-    // Submit Button
-    const submitButton = createDOMElement("button", { type: "submit" }, "Submit", form);
-    submitButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        if (popupType === "addTask") {
-            let newItem = new TodoItem(title.value, description.value, dueDate.value, prioritySelect.value, listObject.getListLength(), false);
-            listObject.addItemToList(newItem);
-            todoListController.drawTodoList(listObject);
-        } else if (popupType === "edit") {
-            itemToEdit.title = title.value;
-            itemToEdit.description = description.value;
-            itemToEdit.dueDate = dueDate.value;
-            itemToEdit.prioritySelect = prioritySelect.value;
-            todoListController.drawTodoList(listObject);
-        } else if (popupType === "addList") {
-            let newTodoList = new List(title.value, listObject.getListLength());
-            listObject.addItemToList(newTodoList);
-            drawSidebarTitles(listObject);
-        } else console.log("Some weird error happened yo");
+    const closeButton = createDOMElement("button", { class: "close-button" }, "X", popupContent);
+    closeButton.addEventListener("click", () => {
         popupContainer.innerHTML = "";
     });
 
-    //Close button
-    closeButton.addEventListener("click", (event) => {
+    const form = createDOMElement("form", {}, "", popupContent);
+    createDOMElement("h1", {}, popupType === "addTask" ? "New Task" : popupType === "addList" ? "New List" : "Edit Task", form);
+
+    const inputs = createDOMElement("div", { class: "inputs" }, "", form);
+    createDOMElement("label", { for: "title" }, "Title:", inputs);
+    const titleInput = createDOMElement("input", { type: "text", id: "title" }, "", inputs);
+
+    let prioritySelect;
+    if (popupType !== "addList") {
+        createDOMElement("label", { for: "description" }, "Description:", inputs);
+        const descriptionInput = createDOMElement("input", { type: "text", id: "description" }, "", inputs);
+
+        createDOMElement("label", { for: "dueDate" }, "Due Date:", inputs);
+        const dueDateInput = createDOMElement("input", { type: "datetime-local", id: "dueDate" }, "", inputs);
+
+        createDOMElement("label", { for: "priority" }, "Priority:", inputs);
+        prioritySelect = createDOMElement("select", { name: "priority" }, "", inputs);
+        ["High", "Medium", "Low"].forEach(priority => {
+            createDOMElement("option", { value: priority }, priority, prioritySelect);
+        });
+
+        if (popupType === "edit" && itemToEdit) {
+            titleInput.value = itemToEdit.title;
+            descriptionInput.value = itemToEdit.description;
+            dueDateInput.value = itemToEdit.dueDate;
+            prioritySelect.value = itemToEdit.priority;
+        }
+    }
+
+    const submitButton = createDOMElement("button", { type: "submit" }, "Submit", form);
+    submitButton.addEventListener("click", (event) => {
         event.preventDefault();
+
+        if (popupType === "addTask") {
+            const newItem = new TodoItem(
+                titleInput.value,
+                descriptionInput?.value,
+                dueDateInput?.value,
+                prioritySelect?.value,
+                listObject.getListLength(),
+                false
+            );
+            listObject.addItemToList(newItem);
+            todoListController.drawTodoList(listObject);
+        } else if (popupType === "edit" && itemToEdit) {
+            itemToEdit.title = titleInput.value;
+            itemToEdit.description = descriptionInput.value;
+            itemToEdit.dueDate = dueDateInput.value;
+            itemToEdit.priority = prioritySelect.value;
+            todoListController.drawTodoList(listObject);
+        } else if (popupType === "addList") {
+            const newList = new List(titleInput.value, listObject.getListLength());
+            listObject.addItemToList(newList);
+            drawSidebarTitles(listObject);
+        }
+
         popupContainer.innerHTML = "";
-    })
+    });
 }
 
 function drawSidebarTitles(listHolderObject) {
     const sidebarTitleWrapper = document.querySelector(".my-lists");
     sidebarTitleWrapper.innerHTML = "";
 
-    function drawTitle(entry) {
+    listHolderObject.getList().forEach(entry => {
         const titleLi = createDOMElement("li", { class: "sidebar-list-title" }, "", sidebarTitleWrapper);
-        const link = createDOMElement("a", { class: "sidebar-list-link" }, entry.title, titleLi);
-        titleLi.addEventListener("click", (event) => {
+        createDOMElement("a", { class: "sidebar-list-link" }, entry.title, titleLi);
+        titleLi.addEventListener("click", () => {
             todoListController.drawTodoList(entry);
-        })
-    }
-
-    const listTitleArray = listHolderObject.getList();
-    for (let i = 0; i < listTitleArray.length; i++) {
-        drawTitle(listTitleArray[i]);
-    }
+        });
+    });
 
     const newListLi = createDOMElement("li", { class: "sidebar-new-list" }, "", sidebarTitleWrapper);
-    //add href to below later
-    createDOMElement("a", { class: "sidebar-new-list-link " }, "Create a new list", newListLi);
-    newListLi.addEventListener("click", (event) => {
+    createDOMElement("a", { class: "sidebar-new-list-link" }, "Create a new list", newListLi);
+    newListLi.addEventListener("click", () => {
         drawPopup("addList", listHolderObject);
     });
 }
 
-export { drawPopup, listDisplayController, createDOMElement, drawSidebarTitles }
+export { drawPopup, listDisplayController, createDOMElement, drawSidebarTitles };
