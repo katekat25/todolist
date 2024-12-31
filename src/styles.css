@@ -1,27 +1,24 @@
+/* General resets */
 body {
     margin: 0;
     padding: 0;
     height: 100vh;
 }
 
-.static {
+p, h1 {
+    display: inline-block;
+}
+
+/* Layout styling */
+.layout {
     display: grid;
     grid-template-columns: 1fr 4fr;
-    height: inherit;
+    height: 100%;
 }
 
 .sidebar {
     grid-column: 1 / 2;
-    /* display: flex;
-    flex-direction: column; */
     border-right: 1px solid blue;
-}
-
-.recents {
-    position: sticky;
-    top: 0;
-    margin-top: 0;
-    padding-top: 20px;
 }
 
 .content {
@@ -29,16 +26,17 @@ body {
 }
 
 /* Sidebar styling */
-
-p {
-    display: inline-block;
+.titles {
+    position: sticky;
+    top: 0;
+    padding-top: 20px;
 }
 
 .logo {
     display: flex;
+    align-items: center;
     padding-bottom: 40px;
     font-size: 2rem;
-    align-items: center;
 }
 
 .sidebar-new-list {
@@ -47,7 +45,7 @@ p {
 
 .sidebar-list-title {
     text-decoration: underline;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .sidebar-new-list-link {
@@ -55,7 +53,6 @@ p {
 }
 
 /* Popup styling */
-
 @keyframes slide-in {
     from {
         translate: 0 150vh;
@@ -67,10 +64,10 @@ p {
 
 @keyframes fade-in {
     from {
-        opacity: 0%;
+        opacity: 0;
     }
     to {
-        opacity: 100%;
+        opacity: 1;
     }
 }
 
@@ -82,53 +79,48 @@ p {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.4);
     z-index: 1;
-    animation-duration: 0.3s;
-    animation-name: fade-in;
+    animation: fade-in 0.3s;
 }
 
 .popup-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
     width: 500px;
     height: 300px;
+    padding: 50px;
     background-color: white;
     color: black;
-    position: absolute;
-    left: 50%;
-    margin-left: -275px;
-    top: 50%;
-    margin-top: -200px;
-    padding: 50px;
+    margin: -200px 0 0 -275px;
     z-index: 2;
-    animation-duration: 0.3s;
-    animation-name: slide-in;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    animation: slide-in 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
 }
 
 .inputs {
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
+    grid-template: repeat(3, 1fr) / repeat(2, 1fr);
 }
 
-.close-button {
-    display: block;
-    margin-left: auto;
-    width: 25px;
-    height: 25px;
-    border-radius: 20px;
-    background-color: white;
-    border: 1px solid gray;
-}
-
+.close-button,
 button[type="submit"] {
     display: block;
     margin-left: auto;
-    margin-top: 25px;
     background-color: white;
     border: 1px solid gray;
 }
 
-/* Todo item styling */
+.close-button {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
 
+button[type="submit"] {
+    margin-top: 25px;
+}
+
+/* Todo item styling */
 .todo-item {
     display: flex;
     align-items: center;
@@ -150,19 +142,13 @@ input[type="checkbox"] {
 }
 
 /* Todo button styling */
-
 .todo-item-add-button {
-    position: fixed; 
+    position: fixed;
     bottom: 100px;
     right: 100px;
     width: 50px;
     height: 50px;
     font-size: 2rem;
-    border-radius: 25px;
+    border-radius: 50%;
     z-index: 0;
-}
-
-/* Todo list styling */
-h1 {
-    display: inline-block;
 }

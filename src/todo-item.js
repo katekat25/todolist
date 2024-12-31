@@ -10,7 +10,7 @@ class TodoItem {
         this.isComplete = isComplete;
     }
 
-    deleteItem = () => this.item = null;
+    deleteSelf = () => this.item = null;
 }
 
 export { TodoItem };

@@ -151,7 +151,7 @@ function drawTodoItem(todoList, todoItem, rootList) {
     const deleteButton = createDOMElement("button", { class: "todo-delete-button" }, "Delete", endContainer);
     deleteButton.addEventListener("click", () => {
         todoList.removeItemFromList(todoItem);
-        todoItem.deleteItem();
+        todoItem.deleteSelf();
         drawTodoList(todoList);
     });
 }
