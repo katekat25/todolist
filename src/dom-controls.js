@@ -79,7 +79,7 @@ function drawPopup(popupType, rootList, todoList = null, itemToEdit = null) {
     createDOMElement("h1", {}, popupType === "addTask" ? "New Task" : popupType === "addList" ? "New List" : "Edit Task", form);
 
     const inputs = createDOMElement("div", { class: "inputs" }, "", form);
-    createDOMElement("label", { for: "title" }, "Title:", inputs);
+    createDOMElement("label", { for: "title" }, "Title * :", inputs);
     const titleInput = createDOMElement("input", { type: "text", id: "title" }, "", inputs);
 
     let prioritySelect, descriptionInput, dueDateInput;
@@ -87,10 +87,10 @@ function drawPopup(popupType, rootList, todoList = null, itemToEdit = null) {
         createDOMElement("label", { for: "description" }, "Description:", inputs);
         descriptionInput = createDOMElement("input", { type: "text", id: "description" }, "", inputs);
 
-        createDOMElement("label", { for: "dueDate" }, "Due Date:", inputs);
+        createDOMElement("label", { for: "dueDate" }, "Due Date * :", inputs);
         dueDateInput = createDOMElement("input", { type: "datetime-local", id: "dueDate" }, "", inputs);
 
-        createDOMElement("label", { for: "priority" }, "Priority:", inputs);
+        createDOMElement("label", { for: "priority" }, "Priority * :", inputs);
         prioritySelect = createDOMElement("select", { name: "priority" }, "", inputs);
         ["High", "Medium", "Low"].forEach(priority => {
             createDOMElement("option", { value: priority }, priority, prioritySelect);
@@ -136,6 +136,8 @@ function drawPopup(popupType, rootList, todoList = null, itemToEdit = null) {
 
         popupContainer.innerHTML = "";
     });
+
+    createDOMElement("div", { class: "required-message" }, "Items marked with * are required.", form);
 }
 
 function drawTodoItem(todoList, todoItem, rootList) {
