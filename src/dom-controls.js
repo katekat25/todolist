@@ -1,5 +1,6 @@
 import { TodoItem } from "./todo-item.js";
-import { List } from "./todo-list.js";
+import { List } from "./list.js";
+import { storage } from "./local-storage.js";
 
 function createDOMElement(type, attributes = {}, textContent = "", parent = null) {
     const element = document.createElement(type);
@@ -16,12 +17,14 @@ function drawSidebar(rootList) {
     const sidebarTitleWrapper = document.querySelector(".my-lists");
     sidebarTitleWrapper.innerHTML = "";
 
-    rootList.getList().forEach(entry => {
-        const titleLi = createDOMElement("li", { class: "sidebar-list-title" }, "", sidebarTitleWrapper);
-        createDOMElement("a", { class: "sidebar-list-link" }, entry.title, titleLi);
-        titleLi.addEventListener("click", () => {
-            drawTodoList(entry, rootList);
+    rootList.getList().forEach(todoList => {
+        const titleLi = createDOMElement("li", {}, "", sidebarTitleWrapper);
+        const todoTitleContainer = createDOMElement("div", { class: "sidebar-list-container"}, "", titleLi);
+        const todoTitle = createDOMElement("a", { class: "sidebar-list-link" }, todoList.title, todoTitleContainer);
+        todoTitle.addEventListener("click", () => {
+            drawTodoList(todoList, rootList);
         });
+        createDOMElement("button", { class: "sidebar-delete" }, "X", todoTitleContainer);
     });
 
     const newListLi = createDOMElement("li", { class: "sidebar-new-list" }, "", sidebarTitleWrapper);
@@ -107,6 +110,9 @@ function drawPopup(popupType, rootList, todoList = null, itemToEdit = null) {
             );
             todoList.addItemToList(newItem);
             drawTodoList(todoList);
+            console.log("passing rootList:");
+            console.log(rootList);
+            storage.saveData(rootList);
         } else if (popupType === "edit" && itemToEdit) {
             itemToEdit.title = titleInput.value;
             itemToEdit.description = descriptionInput.value;

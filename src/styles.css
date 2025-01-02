@@ -43,13 +43,20 @@ p, h1 {
     list-style-type: "+  ";
 }
 
-.sidebar-list-title {
+.sidebar-list-link {
     text-decoration: underline;
     cursor: pointer;
 }
 
+.sidebar-list-container {
+    display: grid;
+    grid-template-columns: 1fr 25px;
+    padding-right: 20px;
+}
+
 .sidebar-new-list-link {
     font-weight: 300;
+    cursor: pointer;
 }
 
 /* Popup styling */

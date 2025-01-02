@@ -1,5 +1,5 @@
 import "./styles.css";
-import { List } from "./todo-list";
+import { List } from "./list";
 import { drawSidebar, drawTodoList } from "./dom-controls";
 
 (function start() {
@@ -8,6 +8,6 @@ import { drawSidebar, drawTodoList } from "./dom-controls";
     console.log(starterTodoList);
     console.log(rootList);
     rootList.addItemToList(starterTodoList);
-    drawTodoList(starterTodoList);
+    drawTodoList(starterTodoList, rootList);
     drawSidebar(rootList);
 })()
