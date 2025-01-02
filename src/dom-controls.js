@@ -19,12 +19,20 @@ function drawSidebar(rootList) {
 
     rootList.getList().forEach(todoList => {
         const titleLi = createDOMElement("li", {}, "", sidebarTitleWrapper);
-        const todoTitleContainer = createDOMElement("div", { class: "sidebar-list-container"}, "", titleLi);
+        const todoTitleContainer = createDOMElement("div", { class: "sidebar-list-container" }, "", titleLi);
         const todoTitle = createDOMElement("a", { class: "sidebar-list-link" }, todoList.title, todoTitleContainer);
         todoTitle.addEventListener("click", () => {
             drawTodoList(todoList, rootList);
         });
-        createDOMElement("button", { class: "sidebar-delete" }, "X", todoTitleContainer);
+        const listDeleteButton = createDOMElement("button", { class: "sidebar-delete" }, "X", todoTitleContainer);
+        listDeleteButton.addEventListener("click", () => {
+            if (confirm("Are you sure you want to delete this list?") == true) {
+                rootList.removeItemFromList(todoList);
+                todoList.deleteSelf();
+                drawSidebar(rootList);
+                storage.saveData(rootList);
+            }
+        });
     });
 
     const newListLi = createDOMElement("li", { class: "sidebar-new-list" }, "", sidebarTitleWrapper);

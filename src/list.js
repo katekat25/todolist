@@ -22,6 +22,8 @@ class List {
     getListLength () {
         return this.list.length;
     }
+
+    deleteSelf = () => this.item = null;
 }
 
 export { List }
