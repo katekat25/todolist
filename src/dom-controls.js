@@ -42,6 +42,7 @@ function drawTodoList(todoList, rootList) {
     todoListTitle.addEventListener("input", () => {
         todoList.title = todoListTitle.textContent;
         drawSidebar(rootList);
+        storage.saveData(rootList);
     });
 
     todoList.getList().forEach(todoItem => {
@@ -110,8 +111,6 @@ function drawPopup(popupType, rootList, todoList = null, itemToEdit = null) {
             );
             todoList.addItemToList(newItem);
             drawTodoList(todoList);
-            console.log("passing rootList:");
-            console.log(rootList);
             storage.saveData(rootList);
         } else if (popupType === "edit" && itemToEdit) {
             itemToEdit.title = titleInput.value;
@@ -119,10 +118,12 @@ function drawPopup(popupType, rootList, todoList = null, itemToEdit = null) {
             itemToEdit.dueDate = dueDateInput.value;
             itemToEdit.priority = prioritySelect.value;
             drawTodoList(todoList);
+            storage.saveData(rootList);
         } else if (popupType === "addList") {
             const newList = new List(titleInput.value, rootList.getListLength());
             rootList.addItemToList(newList);
             drawSidebar(rootList);
+            storage.saveData(rootList);
         }
 
         popupContainer.innerHTML = "";
@@ -159,6 +160,7 @@ function drawTodoItem(todoList, todoItem, rootList) {
         todoList.removeItemFromList(todoItem);
         todoItem.deleteSelf();
         drawTodoList(todoList);
+        storage.saveData(rootList);
     });
 }
 

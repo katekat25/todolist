@@ -1,5 +1,5 @@
 class List {
-    constructor (title, listIndex) {
+    constructor (title, listIndex, list = null) {
         this.list = [];
         this.title = title;
         this.listIndex = listIndex;
