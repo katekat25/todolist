@@ -158,12 +158,19 @@ function drawTodoItem(todoList, todoItem, rootList) {
     });
 
     const middleContainer = createDOMElement("div", {}, "", todoContainer);
-    createDOMElement("div", { class: "todo-title" }, todoItem.title, middleContainer);
+    const todoTitle = createDOMElement("div", { class: "todo-title" }, todoItem.title, middleContainer);
+    console.log(todoItem.priority);
+    if (todoItem.priority == "High") {
+        console.log("High priority.");
+        todoTitle.setAttribute("style", "color:#F93827");
+    } else if (todoItem.priority == "Medium") {
+        todoTitle.setAttribute("style", "color:#FF9D23");
+    }
     createDOMElement("div", { class: "todo-description" }, todoItem.description, middleContainer);
 
     const todoDetails = createDOMElement("div", { class: "todo-details" }, "", middleContainer);
     createDOMElement("div", { class: "todo-due-date" }, `Due: ${todoItem.dueDate}`, todoDetails);
-    createDOMElement("div", { class: "todo-priority" }, `Priority: ${todoItem.priority}`, todoDetails);
+    // createDOMElement("div", { class: "todo-priority" }, `Priority: ${todoItem.priority}`, todoDetails);
 
     const endContainer = createDOMElement("div", {}, "", todoContainer);
     const editButton = createDOMElement("button", { class: "todo-edit-button" }, "Edit", endContainer);
