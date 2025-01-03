@@ -5,6 +5,7 @@ import { drawSidebar, drawTodoList } from "./dom-controls";
 import { storage } from "./local-storage";
 
 (function start() {
+    // window.localStorage.clear();
     let rootList = new List("Root list");
     let starterTodoList;
     if (storage.loadData() === false) {
