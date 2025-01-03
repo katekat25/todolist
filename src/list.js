@@ -1,13 +1,13 @@
 class List {
-    constructor (title, listIndex, list = null) {
+    constructor(title, listIndex, list = null) {
         this.list = [];
         this.title = title;
         this.listIndex = listIndex;
     }
-    addItemToList (item) {
+    addItemToList(item) {
         this.list.push(item);
     }
-    removeItemFromList (item) {
+    removeItemFromList(item) {
         let oldIndex = item.listIndex;
         // Shifts the index number of each following item
         this.list.splice(oldIndex, 1);
@@ -15,11 +15,12 @@ class List {
             this.list[i].listIndex = i;
         };
     }
-    getList () {
+
+    getList() {
         return this.list;
     }
 
-    getListLength () {
+    getListLength() {
         return this.list.length;
     }
 

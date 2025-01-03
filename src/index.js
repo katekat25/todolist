@@ -5,15 +5,12 @@ import { drawSidebar, drawTodoList } from "./dom-controls";
 import { storage } from "./local-storage";
 
 (function start() {
-    // window.localStorage.clear();
     let rootList = new List("Root list");
     let starterTodoList;
     if (storage.loadData() === false) {
-        console.log("No save data found.");
         starterTodoList = new List("Example list", 0);
         rootList.addItemToList(starterTodoList);
     } else {
-        console.log("Save data found.");
         let importedRootList = storage.loadData();
         let rootListArray = Object.keys(importedRootList).map(key => [key, importedRootList[key]]);
 
