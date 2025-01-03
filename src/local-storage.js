@@ -1,14 +1,13 @@
 function createStorage() {
     return {
         saveData(rootList) {
-            console.log(rootList);
             window.localStorage.clear();
-            console.log("Saving data");
+            console.log("Saving data.");
             console.log(JSON.stringify(rootList));
             window.localStorage.setItem("rootList", JSON.stringify(rootList));
         },
         loadData() {
-            console.log("Loading.");
+            console.log("Loading data.");
             if (window.localStorage.getItem("rootList") === null) {
                 return false;
             }

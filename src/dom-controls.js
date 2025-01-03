@@ -168,8 +168,11 @@ function drawTodoItem(todoList, todoItem, rootList) {
     createDOMElement("div", { class: "todo-description" }, todoItem.description, middleContainer);
 
     const todoDetails = createDOMElement("div", { class: "todo-details" }, "", middleContainer);
-    let formattedDate = format(parseISO(todoItem.dueDate), "LLL do, yyyy hh:mmb");
-    createDOMElement("div", { class: "todo-due-date" }, `Due: ${formattedDate}`, todoDetails);
+    const formattedDate = format(parseISO(todoItem.dueDate), "LLL do, yyyy hh:mmb");
+    const dueDate = createDOMElement("div", { class: "todo-due-date" }, `Due: ${formattedDate}`, todoDetails);
+    if (todoItem.checkIfPastDueDate() == true) {
+        dueDate.setAttribute("style", "color:#F93827");
+    }
 
     const endContainer = createDOMElement("div", {}, "", todoContainer);
     const editButton = createDOMElement("button", { class: "todo-edit-button" }, "Edit", endContainer);
