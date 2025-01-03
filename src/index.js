@@ -11,7 +11,7 @@ import { storage } from "./local-storage";
     if (storage.loadData() === false) {
         console.log("No save data found.");
         starterTodoList = new List("Example list", 0);
-        console.log(starterTodoList);
+        rootList.addItemToList(starterTodoList);
     } else {
         let importedRootList = storage.loadData();
         let rootListArray = Object.keys(importedRootList).map(key => [key, importedRootList[key]]);
@@ -33,8 +33,6 @@ import { storage } from "./local-storage";
             }
         }
         starterTodoList = rootList.list[0];
-        console.log("Ping!");
-        console.log(rootList);
         // console.log(starterTodoList);
     }
     drawTodoList(starterTodoList, rootList);
