@@ -63,7 +63,7 @@ function drawTodoList(todoList, rootList) {
     });
 
     todoList.getList().forEach(todoItem => {
-        drawTodoItem(todoList, todoItem);
+        drawTodoItem(todoList, todoItem, rootList);
     });
 
     const addButton = createDOMElement("button", { class: "todo-item-add-button" }, "+", pageContainer);
@@ -116,8 +116,6 @@ function drawPopup(popupType, rootList, todoList = null, itemToEdit = null) {
     const submitButton = createDOMElement("button", { type: "submit" }, "Submit", form);
     submitButton.addEventListener("click", (event) => {
         event.preventDefault();
-        console.log("rootList upon submit:");
-        console.log(rootList);
 
         if (popupType === "addTask") {
             const newItem = new TodoItem(
@@ -132,17 +130,11 @@ function drawPopup(popupType, rootList, todoList = null, itemToEdit = null) {
             drawTodoList(todoList);
             storage.saveData(rootList);
         } else if (popupType === "edit" && itemToEdit) {
-            console.log("rootList before changing values:");
-            console.log(rootList);
-            console.log(itemToEdit);
             itemToEdit.title = titleInput.value;
             itemToEdit.description = descriptionInput.value;
             itemToEdit.dueDate = dueDateInput.value;
             itemToEdit.priority = prioritySelect.value;
-            console.log(itemToEdit);
             drawTodoList(todoList);
-            console.log("rootList after changing values:");
-            console.log(rootList);
             storage.saveData(rootList);
         } else if (popupType === "addList") {
             const newList = new List(titleInput.value, rootList.getListLength());
@@ -183,7 +175,6 @@ function drawTodoItem(todoList, todoItem, rootList) {
     createDOMElement("div", { class: "todo-description" }, todoItem.description, middleContainer);
 
     const todoDetails = createDOMElement("div", { class: "todo-details" }, "", middleContainer);
-    console.log(todoItem.dueDate);
     const formattedDate = format(parseISO(todoItem.dueDate), "LLL do, yyyy hh:mmb");
     const dueDate = createDOMElement("div", { class: "todo-due-date" }, `Due: ${formattedDate}`, todoDetails);
     drawOverdue();
