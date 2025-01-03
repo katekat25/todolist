@@ -1,6 +1,7 @@
 import { TodoItem } from "./todo-item.js";
 import { List } from "./list.js";
 import { storage } from "./local-storage.js";
+import { format, parseISO } from 'date-fns';
 
 function createDOMElement(type, attributes = {}, textContent = "", parent = null) {
     const element = document.createElement(type);
@@ -159,9 +160,7 @@ function drawTodoItem(todoList, todoItem, rootList) {
 
     const middleContainer = createDOMElement("div", {}, "", todoContainer);
     const todoTitle = createDOMElement("div", { class: "todo-title" }, todoItem.title, middleContainer);
-    console.log(todoItem.priority);
     if (todoItem.priority == "High") {
-        console.log("High priority.");
         todoTitle.setAttribute("style", "color:#F93827");
     } else if (todoItem.priority == "Medium") {
         todoTitle.setAttribute("style", "color:#FF9D23");
@@ -169,8 +168,8 @@ function drawTodoItem(todoList, todoItem, rootList) {
     createDOMElement("div", { class: "todo-description" }, todoItem.description, middleContainer);
 
     const todoDetails = createDOMElement("div", { class: "todo-details" }, "", middleContainer);
-    createDOMElement("div", { class: "todo-due-date" }, `Due: ${todoItem.dueDate}`, todoDetails);
-    // createDOMElement("div", { class: "todo-priority" }, `Priority: ${todoItem.priority}`, todoDetails);
+    let formattedDate = format(parseISO(todoItem.dueDate), "LLL do, yyyy hh:mmb");
+    createDOMElement("div", { class: "todo-due-date" }, `Due: ${formattedDate}`, todoDetails);
 
     const endContainer = createDOMElement("div", {}, "", todoContainer);
     const editButton = createDOMElement("button", { class: "todo-edit-button" }, "Edit", endContainer);
