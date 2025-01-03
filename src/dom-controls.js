@@ -153,26 +153,31 @@ function drawTodoItem(todoList, todoItem, rootList) {
 
     const checkboxContainer = createDOMElement("div", {}, "", todoContainer);
     const checkBox = createDOMElement("input", { type: "checkbox", name: "isComplete", value: todoItem.isComplete }, "", checkboxContainer);
-    checkBox.checked = todoItem.isComplete;
-    checkBox.addEventListener("click", () => {
-        todoItem.isComplete = !todoItem.isComplete;
-    });
 
     const middleContainer = createDOMElement("div", {}, "", todoContainer);
     const todoTitle = createDOMElement("div", { class: "todo-title" }, todoItem.title, middleContainer);
-    if (todoItem.priority == "High") {
-        todoTitle.setAttribute("style", "color:#F93827");
-    } else if (todoItem.priority == "Medium") {
-        todoTitle.setAttribute("style", "color:#FF9D23");
-    }
+    drawPriority();
+
+    checkBox.checked = todoItem.isComplete;
+    checkBox.addEventListener("click", () => {
+        todoItem.isComplete = !todoItem.isComplete;
+        if (todoItem.isComplete) {
+            todoTitle.removeAttribute("style");
+            dueDate.removeAttribute("style");
+            todoContainer.classList.add("completed");
+        } else {
+            todoContainer.classList.remove("completed");
+            drawPriority();
+            drawOverdue();
+        }
+    });
+
     createDOMElement("div", { class: "todo-description" }, todoItem.description, middleContainer);
 
     const todoDetails = createDOMElement("div", { class: "todo-details" }, "", middleContainer);
     const formattedDate = format(parseISO(todoItem.dueDate), "LLL do, yyyy hh:mmb");
     const dueDate = createDOMElement("div", { class: "todo-due-date" }, `Due: ${formattedDate}`, todoDetails);
-    if (todoItem.checkIfPastDueDate() == true) {
-        dueDate.setAttribute("style", "color:#F93827");
-    }
+    drawOverdue();
 
     const endContainer = createDOMElement("div", {}, "", todoContainer);
     const editButton = createDOMElement("button", { class: "todo-edit-button" }, "Edit", endContainer);
@@ -187,6 +192,20 @@ function drawTodoItem(todoList, todoItem, rootList) {
         drawTodoList(todoList);
         storage.saveData(rootList);
     });
+
+    function drawPriority() {
+        if (todoItem.priority == "High") {
+            todoTitle.setAttribute("style", "color:#F93827");
+        } else if (todoItem.priority == "Medium") {
+            todoTitle.setAttribute("style", "color:#FF9D23");
+        }
+    }
+
+    function drawOverdue() {
+        if (todoItem.checkIfPastDueDate() == true) {
+            dueDate.setAttribute("style", "color:#F93827");
+        }
+    }
 }
 
 export { createDOMElement, drawSidebar, drawTodoList };

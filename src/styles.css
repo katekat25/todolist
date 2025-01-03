@@ -152,6 +152,15 @@ button[type="submit"] {
 }
 
 /* Todo item styling */
+@keyframes fade-to-grey {
+    from {
+        color: black;
+    }
+    to {
+        color: gray;
+    }
+}
+
 .todo-item {
     display: flex;
     align-items: center;
@@ -171,6 +180,10 @@ input[type="checkbox"] {
 .todo-description {
     font-style: italic;
     font-weight: 300;
+}
+
+.completed {
+    animation: fade-to-grey 0.5s forwards;
 }
 
 /* Todo button styling */
