@@ -68,6 +68,15 @@ p, h1 {
     width: 25px;
     border-radius: 20px;
     background-color: white;
+    cursor: pointer;
+}
+
+#delete-all {
+    position: fixed;
+    bottom: 5px;
+    left: 5px;
+    cursor: pointer;
+    font-weight: 300;
 }
 
 /* Popup styling */
@@ -171,6 +180,7 @@ input[type="checkbox"] {
     right: 100px;
     width: 50px;
     height: 50px;
+    cursor: pointer;
     font-weight: 900;
     font-size: 2.5rem;
     border-radius: 50%;

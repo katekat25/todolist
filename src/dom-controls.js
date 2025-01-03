@@ -14,7 +14,6 @@ function createDOMElement(type, attributes = {}, textContent = "", parent = null
 }
 
 function drawSidebar(rootList) {
-    console.log("In drawSidebar().");
     const sidebarTitleWrapper = document.querySelector(".my-lists");
     sidebarTitleWrapper.innerHTML = "";
 
@@ -40,6 +39,14 @@ function drawSidebar(rootList) {
     createDOMElement("a", { class: "sidebar-new-list-link" }, "Create a new list", newListLi);
     newListLi.addEventListener("click", () => {
         drawPopup("addList", rootList);
+    });
+
+    const deleteAll = document.getElementById("delete-all");
+    deleteAll.addEventListener("click", () => {
+        if (confirm("Are you sure you want to delete everything? This is permanent!") == true) {
+            window.localStorage.clear();
+            window.location.reload();
+        }
     });
 }
 
