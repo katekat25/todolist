@@ -9,22 +9,18 @@ import { storage } from "./local-storage";
     let rootList = new List("Root list", 0);
     let starterTodoList;
     if (storage.loadData() === false) {
+        console.log("No save data found.");
         starterTodoList = new List("Example list", 0);
+        console.log(starterTodoList);
     } else {
         let importedRootList = storage.loadData();
-        console.log(importedRootList);
         let rootListArray = Object.keys(importedRootList).map(key => [key, importedRootList[key]]);
-        console.log(rootListArray);
 
-        for (let i = 0; i <= rootListArray[0][1].length; i++) {
-            console.log(importedRootList.list);
+        for (let i = 0; i < rootListArray[0][1].length; i++) {
             let todoListArray = Object.keys(importedRootList.list[i]).map(key => [key, importedRootList.list[i][key]]);
-            console.log(todoListArray);
             let newTodoList = new List(todoListArray[1][1], todoListArray[2][1], []);
-            // console.log(newTodoList);
             rootList.addItemToList(newTodoList);
-            // console.log(todoListArray[0][1].length);
-            for (let j = 0; j <= todoListArray[0][1].length; j++) {
+            for (let j = 0; j < todoListArray[0][1].length; j++) {
                 let todoItemArray = Object.keys(importedRootList.list[i].list[j]).map(key => [key, importedRootList.list[i].list[j][key]]);
                 let newItem = new TodoItem(todoItemArray[0][1],
                     todoItemArray[1][1],
@@ -37,6 +33,8 @@ import { storage } from "./local-storage";
             }
         }
         starterTodoList = rootList.list[0];
+        console.log("Ping!");
+        console.log(rootList);
         // console.log(starterTodoList);
     }
     drawTodoList(starterTodoList, rootList);

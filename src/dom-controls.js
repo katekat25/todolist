@@ -14,6 +14,7 @@ function createDOMElement(type, attributes = {}, textContent = "", parent = null
 }
 
 function drawSidebar(rootList) {
+    console.log("In drawSidebar().");
     const sidebarTitleWrapper = document.querySelector(".my-lists");
     sidebarTitleWrapper.innerHTML = "";
 
