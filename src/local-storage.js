@@ -5,16 +5,10 @@ function createStorage() {
             window.localStorage.setItem("rootList", JSON.stringify(rootList));
         },
         loadData() {
-            try {
-                window.localStorage.getItem("rootList");
-            } catch (err) {
-                console.log(err);
-                return false;
-            }
-            if (window.localStorage.getItem("rootList") === null) {
-                return false;
-            }
             let rootList = window.localStorage.getItem("rootList");
+            if (rootList === undefined || rootList === null) {
+                return false;
+            }
             return JSON.parse(rootList);
         }
     }
