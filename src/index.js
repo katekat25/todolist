@@ -7,32 +7,36 @@ import { storage } from "./local-storage";
 (function start() {
     // window.localStorage.clear();
     let rootList = new List("Root list");
-    let starterTodoList;
-    if (storage.loadData() === false) {
-        starterTodoList = new List("Example list", 0);
+
+    if (!storage.loadData()) {
+        const starterTodoList = new List("Example list");
         rootList.addItemToList(starterTodoList);
     } else {
-        let importedRootList = storage.loadData();
-        let rootListArray = Object.keys(importedRootList).map(key => [key, importedRootList[key]]);
-
-        for (let i = 0; i < rootListArray[0][1].length; i++) {
-            let todoListArray = Object.keys(importedRootList.list[i]).map(key => [key, importedRootList.list[i][key]]);
-            let newTodoList = new List(todoListArray[1][1], todoListArray[2][1], []);
-            rootList.addItemToList(newTodoList);
-            for (let j = 0; j < todoListArray[0][1].length; j++) {
-                let todoItemArray = Object.keys(importedRootList.list[i].list[j]).map(key => [key, importedRootList.list[i].list[j][key]]);
-                let newItem = new TodoItem(todoItemArray[0][1],
-                    todoItemArray[1][1],
-                    todoItemArray[2][1],
-                    todoItemArray[3][1],
-                    todoItemArray[4][1],
-                    todoItemArray[5][1],);
-                newTodoList.addItemToList(newItem);
-                drawTodoList(newTodoList);
-            }
-        }
-        starterTodoList = rootList.list[0];
+        const importedRootList = storage.loadData();
+        rootList = deserializeList(importedRootList);
     }
+
+    const starterTodoList = rootList.list[0] || new List("Example list");
     drawTodoList(starterTodoList, rootList);
     drawSidebar(rootList);
-})()
+})();
+
+// Helper function to deserialize a List object
+function deserializeList(data) {
+    const newList = new List(data.title, data.listIndex);
+    newList.list = data.list.map(subListData => {
+        const subList = new List(subListData.title, subListData.listIndex, []);
+        subList.list = subListData.list.map(itemData => 
+            new TodoItem(
+                itemData.title, 
+                itemData.description, 
+                itemData.dueDate, 
+                itemData.priority, 
+                itemData.isComplete, 
+                itemData.listIndex
+            )
+        );
+        return subList;
+    });
+    return newList;
+}
