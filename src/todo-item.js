@@ -1,18 +1,25 @@
-import { isPast } from 'date-fns';
+import { isPast } from "date-fns";
 
 class TodoItem {
-    constructor(title, description, dueDate, priority, listIndex, isComplete = false) {
-        this.title = title;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.priority = priority;
-        this.listIndex = listIndex;
-        this.isComplete = isComplete;
-    }
+  constructor(
+    title,
+    description,
+    dueDate,
+    priority,
+    index,
+    isComplete = false,
+  ) {
+    this.title = title;
+    this.description = description;
+    this.dueDate = dueDate;
+    this.priority = priority;
+    this.index = index;
+    this.isComplete = isComplete;
+  }
 
-    deleteSelf = () => this.item = null;
+  deleteSelf = () => (this.item = null);
 
-    checkIfPastDueDate = () => isPast(this.dueDate);
+  checkIfPastDueDate = () => isPast(this.dueDate);
 }
 
 export { TodoItem };

@@ -1,202 +1,205 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
 /* General resets */
 body {
-    font-family: "Noto Sans", serif;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
+  font-family: "Noto Sans", serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
 }
 
-p, h1 {
-    display: inline-block;
+p,
+h1 {
+  display: inline-block;
 }
 
 /* Layout styling */
 .layout {
-    display: grid;
-    grid-template-columns: 1fr 4fr;
-    height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  height: 100%;
 }
 
 .sidebar {
-    grid-column: 1 / 2;
-    border-right: 1px solid #1e4dfb;
+  grid-column: 1 / 2;
+  border-right: 1px solid #1e4dfb;
 }
 
 .content {
-    padding: 50px;
+  padding: 50px;
 }
 
 /* Sidebar styling */
 .titles {
-    position: sticky;
-    top: 0;
-    padding-top: 20px;
+  position: sticky;
+  top: 0;
+  padding-top: 20px;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    padding-bottom: 40px;
-    font-size: 2rem;
+  display: flex;
+  align-items: center;
+  padding-bottom: 40px;
+  font-size: 2rem;
 }
 
 .sidebar-new-list {
-    list-style-type: "+  ";
+  list-style-type: "+  ";
 }
 
 .sidebar-list-link {
-    text-decoration: underline;
-    cursor: pointer;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .sidebar-list-container {
-    display: grid;
-    grid-template-columns: 1fr 25px;
-    padding-right: 20px;
+  display: grid;
+  grid-template-columns: 1fr 25px;
+  padding-right: 20px;
 }
 
 .sidebar-new-list-link {
-    font-weight: 300;
-    cursor: pointer;
+  font-weight: 300;
+  cursor: pointer;
 }
 
 .sidebar-delete {
-    height: 25px;
-    width: 25px;
-    border-radius: 20px;
-    background-color: white;
-    cursor: pointer;
+  height: 25px;
+  width: 25px;
+  border-radius: 20px;
+  background-color: white;
+  cursor: pointer;
 }
 
 #delete-all {
-    position: fixed;
-    bottom: 5px;
-    left: 5px;
-    cursor: pointer;
-    font-weight: 300;
+  position: fixed;
+  bottom: 5px;
+  left: 5px;
+  cursor: pointer;
+  font-weight: 300;
 }
 
 /* Popup styling */
 @keyframes slide-in {
-    from {
-        translate: 0 150vh;
-    }
-    to {
-        translate: 0 0;
-    }
+  from {
+    translate: 0 150vh;
+  }
+  to {
+    translate: 0 0;
+  }
 }
 
 @keyframes fade-in {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .popup-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    z-index: 1;
-    animation: fade-in 0.3s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  animation: fade-in 0.3s;
 }
 
 .popup-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 500px;
-    height: 300px;
-    padding: 50px;
-    background-color: white;
-    color: black;
-    margin: -200px 0 0 -275px;
-    z-index: 2;
-    animation: slide-in 0.3s;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  height: 300px;
+  padding: 50px;
+  background-color: white;
+  color: black;
+  margin: -200px 0 0 -275px;
+  z-index: 2;
+  animation: slide-in 0.3s;
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.2),
+    0 6px 20px rgba(0, 0, 0, 0.19);
 }
 
 .inputs {
-    display: grid;
-    grid-template: repeat(3, 1fr) / repeat(2, 1fr);
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(2, 1fr);
 }
 
 .close-button,
 button[type="submit"] {
-    display: block;
-    margin-left: auto;
-    background-color: white;
-    border: 1px solid gray;
+  display: block;
+  margin-left: auto;
+  background-color: white;
+  border: 1px solid gray;
 }
 
 .close-button {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
 }
 
 button[type="submit"] {
-    margin-top: 25px;
+  margin-top: 25px;
 }
 
 .required-message {
-    font-style: italic;
+  font-style: italic;
 }
 
 /* Todo item styling */
 @keyframes fade-to-grey {
-    from {
-        color: black;
-    }
-    to {
-        color: gray;
-    }
+  from {
+    color: black;
+  }
+  to {
+    color: gray;
+  }
 }
 
 .todo-item {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
 }
 
 input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 .todo-title {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .todo-description {
-    font-style: italic;
-    font-weight: 300;
+  font-style: italic;
+  font-weight: 300;
 }
 
 .completed {
-    animation: fade-to-grey 0.5s forwards;
+  animation: fade-to-grey 0.5s forwards;
 }
 
 /* Todo button styling */
 .todo-item-add-button {
-    position: fixed;
-    bottom: 100px;
-    right: 100px;
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    font-weight: 900;
-    font-size: 2.5rem;
-    border-radius: 50%;
-    z-index: 0;
-    background-color: #1e4dfb;
-    color: white;
+  position: fixed;
+  bottom: 100px;
+  right: 100px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  font-weight: 900;
+  font-size: 2.5rem;
+  border-radius: 50%;
+  z-index: 0;
+  background-color: #1e4dfb;
+  color: white;
 }
